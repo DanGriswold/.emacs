@@ -1,0 +1,111 @@
+#+OPTIONS: author:nil timestamp:nil
+#+TITLE:
+#+DATE:
+#+LaTeX_CLASS: cv
+
+#+BEGIN_LATEX
+\begin{flushleft}
+  \bfseries\Large Curriculum Vitae\hfill Daniel M.\space{}Griswold\normalfont
+\end{flushleft}
+
+\vspace{-12pt}%
+\begin{flushright}
+  69 Stratton Road\\
+  Rochester, NY 14610\\
+  (585) 784-0841\\
+  dgriswol@rochester.rr.com\\
+  \hrulefill
+\end{flushright}
+#+END_LATEX
+
+* Education
+
+  - Ph.\space{}D., Southern Methodist University, Dallas, Texas, 2010
+  - M.\space{}Div., Union Theological Seminary in Virginia, Richmond, Virginia, 1991
+  - A.\space{}B., Hope College, Holland, Michigan, 1986
+
+
+* Areas of Specialization
+
+
+  -  The doctrine of God, theological method, the interrelationship of doctrines, the nature of theological discourse
+  - The theology of Karl Barth, Reformed theology
+  - The problem of time and eternity, the relationship of faith and reason
+  - Twentieth century Protestant theological movements
+
+
+* Areas of Competence
+
+  - Christology, ecclesiology, issues in science and theology
+  - Modern and postmodern theologies
+  - Historical theology: development of Christian doctrine, interaction between the church and culture; Calvin, Jonathan Edwards, Schleiermacher; Augustine, Aquinas
+  - Church history: Patristics, Late Medieval, the Reformation, Enlightenment
+  - Theological ethics: classical and contemporary moral theory, medical ethics, war, moral agency, culture and technology
+  - Philosophical theology: classical and neo-classical approaches, religious epistemology, the problem of evil
+  - Comparative religions
+
+
+* Employment History
+
+  - Pastor, Trinity Reformed Church, Rochester, NY, 2003--present
+  - Adjunct Professor, Western Theological Seminary, Holland, MI, 2012--2014
+  - Associate Pastor for Christian Education and Congregational Life, The Reformed Church in Plano, TX, 2001--2003
+  - Associate Pastor for Music and Worship, Hope Reformed Church, Carrollton, TX, 2000--2001
+  - Music Director, Hope Reformed Church, Carrollton, TX, 1999-2001
+  - Instructional Technology Coordinator, Perkins School of Theology, Southern Methodist University, 1998--2001
+  - Adjunct Instructor, Perkins School of Theology, Southern Methodist University, Dallas, TX, August 1997--May 1998
+  - Adjunct Instructor, Austin College, Sherman, Texas. September 1996--May 1997
+  - Assistant to the Editor, Journal of Biblical Literature, December 1994--May 1996
+
+
+* Denominational and Community Service
+
+  - Member, Board of Directors, Penfield Symphony Orchestra, 2014--present
+  - Member, Board of Managers, Flower City Ministries, Rochester Classis, 2015--present
+  - Moderator, Commission on Theology, Reformed Church in America, 2014--2016
+  - Member, Commission on Theology, 2010--present
+  - President, Rochester Classis, 2011--2013
+  - Coordinator of student care and examinations, Rochester Classis, 2005--2011 (service included administering and writing the questions for most of the ten oral exams given to students)
+  - Member, Overtures and Judicial Business Committee, the Regional Synod of Albany, 2005--2010 (chair: 2006--2008)
+  - President, the Regional Synod of Albany, 2008--2009
+  - President, Red River Classis, 1999--2000
+
+
+* Other Teaching Opportunities
+  - "The Songs We Sing," /Freedom In Ministry/ (retreat for ministers and spouses), January 6--8, 2012
+  - "Four Standards and a BCO," /Living Stones/ (preaching elder foundational curriculum), August--September 2011
+  - "Introduction to Reformed Theology," /Living Stones/, Fall, 2010
+  - "Administration for Pastors," /Beginning and Beyond/ ministers' retreat, March 31, 2008
+  - "Introduction to Preaching," /Living Stones/, Summer, 2007
+  - "Worship Leadership Skills," /Living Stones/, Fall, 2004
+  - "How to Think Theologically," /Perkins School of Youth Ministry/, Perkins School of Theology, Southern Methodist University, Summer, 2000
+  - Teaching assistant, /Introduction to Theological Studies/, Perkins/SMU, Fall, 1994
+
+
+
+* Publications
+
+  - /Triune Eternality: God's Relationship to the Theology of Karl Barth/, Minneapolis: Fortress Press, 2015.
+
+  - "Eternity."  In /The Westminister Handbook to Karl Barth/, edited by Richard Burnett, pp.\space{}63-65. Louisville, KY: Westminster John Knox Press, 2013.
+
+  - "Time." In /The Westminster Handbook to Karl Barth/, pp.\space{}209-211.
+
+  - "Beyond the Hype: The Internet and the Church." /Perspectives/ 18 No.\space{}1 (January 2003): 8--9.
+
+  - Review of /German Essays on Religion/, ed.@@latex:\ @@by Edward T.\space{}Oakes. /Reformed Review/ 50 No.@@latex:\ @@1 (Autumn 1996):63f.
+
+  - Review of /Narratives of a Vulnerable God: Christ, Theology, and Scripture/, by William C.\space{}Placher. /Perspectives/ 10 No.\space{}3 (March 1995): 22-23, 10.
+
+  - Review of /To Understand God Truly: What's Theological About a Theological School?/, by David H.\space{}Kelsey. /Reformed Review/ 46 No.\space{}3 (Spring 1993): 255.
+
+
+
+* Awards and Honors
+  - Sabbatical Grant for Pastoral Leaders, the Louisville Institute, 2012 (proposal title: "Calling in Counterpoint: A Musical Exploration of Pastoral Vocation")
+  - Graduate Program in Religious Studies Fellowship, Southern Methodist University, 1991--1997
+  - Grant, Fund for the Explication and Application of Reformed Theology, Richmond, Virginia, 1994
+  - Grant to attend "The Future of Christian Scholarship in a Post-Modern Age," a Michigan regional conference sponsored by the Lilly Fellows Program in Humanities and the Arts, June 21--23, 1994
+  - W.\space{}T.\space{}Thompson Fellowship, Union Theological Seminary in Virginia, 1988--1990
+  - Friends' Fellowship, Union Theological Seminary in Virginia, 1987
+

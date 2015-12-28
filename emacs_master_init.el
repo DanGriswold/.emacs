@@ -1,7 +1,7 @@
 ;; * Header
 ;; .emacs file for Dan Griswold
 ;; hostname: cantor
-;; Time-stamp: "2015-12-28 11:48:34 alto3880 daniel"
+;; Time-stamp: "2015-12-28 17:06:27 alto3880 daniel"
 
 ;; * Initial settings
 (setq debug-on-error nil)
@@ -59,7 +59,7 @@
        (variable-pitch-mode t))
      dmg-reftex-buf
      (lambda nil
-       (setq fit-frame-max-width 79)))) t)
+       (setq fit-frame-max-width 79)))))
  '(LaTeX-style-list
    (quote
     (("article")
@@ -737,7 +737,7 @@
  '(org-directory "~/Dropbox/GTD/")
  '(org-email-link-description-format "%s (%c)")
  '(org-enforce-todo-dependencies nil)
- '(org-export-backends (quote (ascii html icalendar latex odt org rss)))
+ '(org-export-backends (quote (ascii html icalendar latex md odt org rss)))
  '(org-export-invisible-backends (quote (ascii org)))
  '(org-export-latex-date-format "%B %d, %Y")
  '(org-export-with-section-numbers nil)
@@ -983,7 +983,16 @@
 \\predate{\\begin{center}\\zaph\\Large}\\postdate{\\normalfont\\par\\end{center}}"
       ("\\section{%s}" . "\\section*{%s}")
       ("\\paragraph{%s}" . "\\paragraph*{%s}")
-      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
+      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+     ("cv" "\\documentclass[10pt]{article}
+\\usepackage[margin=.75in]{geometry}
+%\\usepackage{palatino}
+\\usepackage{sectsty}
+\\sectionfont{\\normalsize\\selectfont\\itshape}
+\\usepackage[T1]{fontenc}
+\\usepackage{libertine}
+\\renewcommand*\\oldstylenums[1]{{\\fontfamily{fxlj}\\selectfont #1}}"
+      ("\\section{}" . "\\section*{}")))))
  '(org-latex-default-packages-alist
 (quote
  (("" "graphicx" t)
