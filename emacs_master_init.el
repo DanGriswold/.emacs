@@ -1,7 +1,7 @@
 ;; * Header
 ;; .emacs file for Dan Griswold
 ;; hostname: cantor
-;; Time-stamp: "2015-12-28 22:49:29 alto3880 daniel"
+;; Time-stamp: "2015-12-29 07:57:59 alto3880 daniel"
 
 ;; * Initial settings
 (setq debug-on-error nil)
@@ -33,6 +33,8 @@
 	    "~/Dropbox/GTD/coaching.org"
 	    "~/Dropbox/GTD/minbook.org"
 	    "~/Dropbox/GTD/calendar.org"))
+
+(global-set-key (kbd "C-h V") 'customize-variable)
 
 
 ;; * Customized variables and faces
@@ -365,6 +367,7 @@
  '(g-user-email "dgriswol@rochester.rr.com")
  '(gblogger-user-email "dgriswol@rochester.rr.com")
  '(global-font-lock-mode t nil (font-lock))
+ '(global-magit-file-mode t)
  '(holiday-bahai-holidays nil)
  '(holiday-christian-holidays
    (quote
@@ -574,7 +577,7 @@
  '(org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 2 :formula %)))
  '(org-agenda-custom-commands
    (quote
-    (("p" "Projects" tags "+LEVEL=2+PROJECT/-WRAPPED-DROPPED"
+    (("p" "Current Projects" tags "+LEVEL=2+PROJECT/CURRENT"
       ((org-agenda-sorting-strategy
 	(quote
 	 (category-keep todo-state-down)))
@@ -1217,8 +1220,6 @@
 
 ;; * Display settings
 
-(mode-icons-mode)
-
 (cond
  ((string-equal system-name  "alto3880")
   (set-face-attribute 'default nil :font "Inconsolata-16")
@@ -1248,8 +1249,9 @@
 (global-set-key (kbd "C-a") 'beginning-of-visual-line)
 (global-set-key (kbd "C-e") 'end-of-visual-line)
 
-;; this is pretty cool: sets cursor color blue for regular, red for
-;; overwrite, black for read-only
+(mode-icons-mode)
+
+;; sets cursor color blue for regular, red for overwrite, black for read-only
 (setq hcz-set-cursor-color-color ""
       hcz-set-cursor-color-buffer "")
 (defun hcz-set-cursor-color-according-to-mode ()
@@ -1264,7 +1266,7 @@
 	     (string= (buffer-name) hcz-set-cursor-color-buffer))
       (set-cursor-color (setq hcz-set-cursor-color-color color))
       (setq hcz-set-cursor-color-buffer (buffer-name)))))
-;(add-hook 'post-command-hook 'hcz-set-cursor-color-according-to-mode)
+(add-hook 'post-command-hook 'hcz-set-cursor-color-according-to-mode)
 
 (autoload 'iimage-mode "iimage" "Support Inline image minor mode." t)
 (autoload 'turn-on-iimage-mode "iimage" "Turn on Inline image minor mode." t)
@@ -1692,15 +1694,18 @@ If not, display a word count for the whole buffer."
 	   (file+headline "~/Dropbox/GTD/cot.org" "My Tasks")
 	   ,my/org-basic-task-template :empty-lines 1)
 	  ("a" "Ask someone about something")
-	  ("aj" "Discuss with Jana" entry
+	  ("aj" "Discuss with Jana" entry ;; Jana is my secretary
 	   (file+headline "~/Dropbox/GTD/trinity.org" "Tasks")
 	   "* TODO Ask Jana %^{Thing for Jana}  :Jana:\n:PROPERTIES:\n:CREATED: %U\n:END:\n" :empty-lines 1)
-	  ("at" "Tammi" entry
+	  ("at" "Tammi" entry             ;; Tammi is my wife
 	   (file+headline "~/Dropbox/GTD/personal.org" "Tasks")
 	   "* TODO Ask Tammi %^{Thing for Tammi}%? :Tammi:\n  %^u\n:PROPERTIES:\n:CREATED: %U\n:END:\n" :empty-lines 1)
-	  ("aa" "Alexis" entry
+	  ("aa" "Alexis" entry            ;; Alexis is my organist
 	   (file+headline "~/Dropbox/GTD/trinity.org" "Tasks")
 	   "* TODO Ask Alexis %^{Thing for Alexis}%? :Alexis:\n  %^u\n:PROPERTIES:\n:CREATED: %U\n:END:\n" :empty-lines 1)
+	  ("am" "Mike" entry            ;; Mike is my coach
+	   (file+headline "~/Dropbox/GTD/coaching.org" "Tasks")
+	   "* TODO Ask Mike %^{Thing for Mike}%? :Mike:\n  %^u\n:PROPERTIES:\n:CREATED: %U\n:END:\n" :empty-lines 1)
 	  ("p" "New Project")
 	  ("pw" "Church Project" entry
 	   (file+headline "~/Dropbox/GTD/trinity.org" "Unassigned Projects")
@@ -2073,6 +2078,8 @@ latter is superior for polytonic greek"
 
 
 
+;; ** magit
+(global-set-key (kbd "C-x g") 'magit-status)
 ;; * BBDB
 
 (use-package bbdb-loaddefs
