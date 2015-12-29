@@ -1,7 +1,7 @@
 ;; * Header
 ;; .emacs file for Dan Griswold
 ;; hostname: cantor
-;; Time-stamp: "2015-12-28 17:06:27 alto3880 daniel"
+;; Time-stamp: "2015-12-28 22:49:29 alto3880 daniel"
 
 ;; * Initial settings
 (setq debug-on-error nil)
@@ -59,7 +59,7 @@
        (variable-pitch-mode t))
      dmg-reftex-buf
      (lambda nil
-       (setq fit-frame-max-width 79)))))
+       (setq fit-frame-max-width 79)))) t)
  '(LaTeX-style-list
    (quote
     (("article")
@@ -322,7 +322,7 @@
  '(emms-source-playlist-default-format (quote native))
  '(erc-autojoin-channels-alist
    (quote
-    (("freenode.net" "#debian" "#emacs")
+    (("freenode.net" "#org-mode" "#emacs")
      ("oftc.net" "#awesome"))))
  '(erc-hide-list (quote ("JOIN" "PART" "QUIT")))
  '(erc-modules
@@ -1073,11 +1073,10 @@
 '(package-archives
 (quote
  (("gnu" . "https://elpa.gnu.org/packages/")
-  ("melpa" . "https://melpa.org/packages/")
-  ("org" . "http://orgmode.org/elpa/"))))
+  ("melpa" . "https://melpa.org/packages/"))))
 '(package-selected-packages
 (quote
- (outshine olivetti dracula-theme counsel outlined-elisp-mode selectric-mode emmet-mode async web-mode org-mobile-sync dictionary multi-term paradox dired+ dired-sort dired-sort-menu bookmark+ org-password-manager use-package mode-icons org-plus-contrib zenburn-theme wc-mode twittering-mode twilight-theme syslog-mode synonyms svg-clock soothe-theme solarized-theme smex sentence-highlight remember-theme rainbow-mode rainbow-delimiters pretty-lambdada pp-c-l php-mode persistent-scratch paredit org2blog org-bullets oauth2 nyan-mode naquadah-theme monokai-theme moe-theme minimap lua-mode lorem-ipsum less-css-mode ido-ubiquitous google-maps google gandalf-theme find-file-in-project dired-details diminish deft csv-mode conkeror-minor-mode col-highlight birds-of-paradise-plus-theme auctex anti-zenburn-theme)))
+ (magit outshine olivetti dracula-theme counsel outlined-elisp-mode selectric-mode emmet-mode async web-mode org-mobile-sync dictionary multi-term paradox dired+ dired-sort dired-sort-menu bookmark+ org-password-manager use-package mode-icons org-plus-contrib zenburn-theme wc-mode twittering-mode twilight-theme syslog-mode synonyms svg-clock soothe-theme solarized-theme smex sentence-highlight remember-theme rainbow-mode rainbow-delimiters pretty-lambdada pp-c-l php-mode persistent-scratch paredit org2blog org-bullets oauth2 nyan-mode naquadah-theme monokai-theme moe-theme minimap lua-mode lorem-ipsum less-css-mode ido-ubiquitous google-maps google gandalf-theme find-file-in-project dired-details diminish deft csv-mode conkeror-minor-mode col-highlight birds-of-paradise-plus-theme auctex anti-zenburn-theme)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pretty-control-l-mode t)
