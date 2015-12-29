@@ -20,4 +20,9 @@ My .emacs file, plus any other needed or example files. This is not a programmer
     -   orders of worship
     -   syllabus
     -   CV
--   custom org-mode agendas of use to me
+-   custom org-mode agendas of use to me, including
+    -   weekly review
+    -   clock report of current week&rsquo;s tasks logged in worklog.org
+-   hierarchical org-capture-templates using variable substitution
+-   function to show word counts of all \*tex files in current directory
+-   function to display, in an awesomeWM widget, the number of current TODO tasks
