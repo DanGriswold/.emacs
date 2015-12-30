@@ -1,6 +1,6 @@
 # Description
 
-My .emacs file, plus any other needed or example files. This is not a programmer&rsquo;s .emacs, but one that has been cultivated by a writer and pastor who works mostly in org-mode and AucTeX.
+My .emacs file, plus any other needed or example files. This is not a programmer&rsquo;s .emacs, but one that has been cultivated by a writer and pastor who has been using Emacs for 15 years or more and works now mostly in org-mode and AucTeX.
 
 # Significant features
 
@@ -14,12 +14,12 @@ My .emacs file, plus any other needed or example files. This is not a programmer
     -   org files opened on startup
 -   org-latex-classes for
     -   agendas
-    -   a book (modeled on Fortress Press style)
-    -   a book proposal
+    -   books (modeled on Fortress Press style)
+    -   book proposals
     -   lectures
     -   orders of worship
-    -   syllabus
-    -   CV
+    -   syllabi
+    -   CVs/resumés
 -   custom org-mode agendas of use to me, including
     -   weekly review
     -   clock report of current week&rsquo;s tasks logged in worklog.org

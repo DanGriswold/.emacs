@@ -1,7 +1,7 @@
 ;; * Header
 ;; .emacs file for Dan Griswold
 ;; hostname: cantor
-;; Time-stamp: "2015-12-29 07:57:59 alto3880 daniel"
+;; Time-stamp: "2015-12-29 09:16:20 alto3880 daniel"
 
 ;; * Initial settings
 (setq debug-on-error nil)
@@ -728,7 +728,7 @@
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-span (quote day))
  '(org-agenda-start-on-weekday nil)
- '(org-agenda-sticky t)
+ '(org-agenda-sticky nil)
  '(org-agenda-use-time-grid nil)
  '(org-archive-mark-done nil)
  '(org-babel-load-languages (quote ((emacs-lisp . t) (lilypond . t))))
@@ -1076,7 +1076,8 @@
 '(package-archives
 (quote
  (("gnu" . "https://elpa.gnu.org/packages/")
-  ("melpa" . "https://melpa.org/packages/"))))
+  ("melpa" . "https://melpa.org/packages/")
+  ("org" . "http://orgmode.org/elpa/"))))
 '(package-selected-packages
 (quote
  (magit outshine olivetti dracula-theme counsel outlined-elisp-mode selectric-mode emmet-mode async web-mode org-mobile-sync dictionary multi-term paradox dired+ dired-sort dired-sort-menu bookmark+ org-password-manager use-package mode-icons org-plus-contrib zenburn-theme wc-mode twittering-mode twilight-theme syslog-mode synonyms svg-clock soothe-theme solarized-theme smex sentence-highlight remember-theme rainbow-mode rainbow-delimiters pretty-lambdada pp-c-l php-mode persistent-scratch paredit org2blog org-bullets oauth2 nyan-mode naquadah-theme monokai-theme moe-theme minimap lua-mode lorem-ipsum less-css-mode ido-ubiquitous google-maps google gandalf-theme find-file-in-project dired-details diminish deft csv-mode conkeror-minor-mode col-highlight birds-of-paradise-plus-theme auctex anti-zenburn-theme)))
@@ -1799,7 +1800,7 @@ the same tree node, and the headline of the tree node in the Org-mode file."
 	(setq ogf-tmp org-agenda-files)
 	(setq org-agenda-files (quote ("~/Dropbox/GTD/personal.org" "~/Dropbox/GTD/ci.org" "~/Dropbox/GTD/cot.org" "~/Dropbox/GTD/scholarship.org" "~/Dropbox/GTD/minbook.org" "~/Dropbox/GTD/life.org" "~/Dropbox/GTD/pso.org")))
 	(org-agenda nil "a" nil)
-	(set-buffer "*Org Agenda(a)*")
+	(set-buffer "*Org Agenda*")
 	(end-of-buffer)
 	(let ((items (concat "echo '" "orgwidget:set_text(\" " (number-to-string (- (string-to-number (format-mode-line "%l")) 2)) " \")" "'" "| awesome-client" )))
 	  (shell-command items))
