@@ -19,7 +19,7 @@ My .emacs file, plus any other needed or example files. This is not a programmer
     -   lectures
     -   orders of worship
     -   syllabi
-    -   CVs/resumés
+    -   CVs/résumés
 -   custom org-mode agendas of use to me, including
     -   weekly review
     -   clock report of current week&rsquo;s tasks logged in worklog.org
