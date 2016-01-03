@@ -1,7 +1,7 @@
 ;; * Header
 ;; .emacs file for Dan Griswold
 ;; hostname: cantor
-;; Time-stamp: "2015-12-29 09:16:20 alto3880 daniel"
+;; Time-stamp: "2016-01-02 19:08:17 alto3880 daniel"
 
 ;; * Initial settings
 (setq debug-on-error nil)
@@ -515,6 +515,13 @@
  '(ispell-check-comments nil)
  '(ispell-program-name "aspell")
  '(latex-run-command "latex -src-specials")
+ '(ledger-reports
+   (quote
+    (("register" "ledger register")
+     ("bal" "ledger -f %(ledger-file) bal")
+     ("reg" "ledger -f %(ledger-file) reg")
+     ("payee" "ledger -f %(ledger-file) reg @%(payee)")
+     ("account" "ledger -f %(ledger-file) reg %(account)"))))
  '(lookout-bbdb-mapping-table
    (quote
     (("lastname" . "LastName")
@@ -995,7 +1002,12 @@
 \\usepackage[T1]{fontenc}
 \\usepackage{libertine}
 \\renewcommand*\\oldstylenums[1]{{\\fontfamily{fxlj}\\selectfont #1}}"
-      ("\\section{}" . "\\section*{}")))))
+      ("\\section{}" . "\\section*{}"))
+     ("profile" "\\documentclass[12pt]{article}
+\\usepackage[margin=1in]{geometry}
+"
+      ("\\section{}" . "\\section*{}")
+      ("\\subsection{}" . "\\subsection*{}")))))
  '(org-latex-default-packages-alist
 (quote
  (("" "graphicx" t)
@@ -1031,6 +1043,7 @@
   (org-agenda-files :todo . "NOW"))))
  '(org-refile-use-outline-path t)
  '(org-special-ctrl-a/e t)
+ '(org-speed-commands-user (quote (("i" . dmg/clockin))))
 '(org-stuck-projects
 (quote
  ("PROJECT+LEVEL=2/-WRAPPED-DROPPED"
@@ -1080,7 +1093,7 @@
   ("org" . "http://orgmode.org/elpa/"))))
 '(package-selected-packages
 (quote
- (magit outshine olivetti dracula-theme counsel outlined-elisp-mode selectric-mode emmet-mode async web-mode org-mobile-sync dictionary multi-term paradox dired+ dired-sort dired-sort-menu bookmark+ org-password-manager use-package mode-icons org-plus-contrib zenburn-theme wc-mode twittering-mode twilight-theme syslog-mode synonyms svg-clock soothe-theme solarized-theme smex sentence-highlight remember-theme rainbow-mode rainbow-delimiters pretty-lambdada pp-c-l php-mode persistent-scratch paredit org2blog org-bullets oauth2 nyan-mode naquadah-theme monokai-theme moe-theme minimap lua-mode lorem-ipsum less-css-mode ido-ubiquitous google-maps google gandalf-theme find-file-in-project dired-details diminish deft csv-mode conkeror-minor-mode col-highlight birds-of-paradise-plus-theme auctex anti-zenburn-theme)))
+ (ledger-mode org-plus-contrib smex web-mode zenburn-theme magit outshine olivetti dracula-theme counsel outlined-elisp-mode selectric-mode emmet-mode async org-mobile-sync dictionary multi-term paradox dired+ dired-sort dired-sort-menu bookmark+ org-password-manager use-package mode-icons wc-mode twittering-mode twilight-theme syslog-mode synonyms svg-clock soothe-theme solarized-theme sentence-highlight remember-theme rainbow-mode rainbow-delimiters pretty-lambdada pp-c-l php-mode persistent-scratch paredit org2blog org-bullets oauth2 nyan-mode naquadah-theme monokai-theme moe-theme minimap lua-mode lorem-ipsum less-css-mode ido-ubiquitous google-maps google gandalf-theme find-file-in-project dired-details diminish deft csv-mode conkeror-minor-mode col-highlight birds-of-paradise-plus-theme auctex anti-zenburn-theme)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
  '(pretty-control-l-mode t)
@@ -1129,7 +1142,7 @@
  '(sentence-end-double-space nil)
  '(shadow-noquery t)
  '(show-paren-mode t nil (paren))
- '(sort-fold-case t t)
+ '(sort-fold-case t)
  '(sudoku-download-method "wget")
  '(sudoku-level "evil")
  '(sudoku-puzzle-source "built-in")
@@ -1624,13 +1637,9 @@ If not, display a word count for the whole buffer."
 ;; ** Org-mode
 
 (use-package org
-  :mode ("\\.org$" . org-mode)
   :diminish outline-minor-mode
   :init
   (setq org-ellipsis "⤵")
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
   :bind
   ("\C-cl" . org-store-link)
@@ -1639,6 +1648,9 @@ If not, display a word count for the whole buffer."
   :config
   (bind-key [(control tab)] 'other-window org-mode-map)
   (bind-key [f12] 'dmg-agenda-export org-mode-map)
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
   (add-hook 'org-mode-hook
 	    (lambda()
@@ -1762,12 +1774,6 @@ the same tree node, and the headline of the tree node in the Org-mode file."
 (autoload 'org-in-clocktable-p "org-clock")
 
 
-(use-package deft
-	     :config 
-	     (setq
-	      deft-extension "org"
-	      deft-directory "~/Dropbox/GTD"
-	      deft-text-mode 'org-mode))
 
 (defun dmg-export-worship-sermon-planning ()
   "Export an html version of my sermon planning sheet for Jana"
@@ -1852,6 +1858,16 @@ the same tree node, and the headline of the tree node in the Org-mode file."
 
 
 
+(defun dmg/clockin ()
+  (interactive)
+  (let ((entry (org-entry-get nil "worklog" t)))
+    (if entry
+	(progn
+	  (org-open-link-from-string entry t)
+	  (with-current-buffer "worklog.org"
+	    (org-clock-in)))
+      (user-error "No worklog entry here"))) 
+  )
 
 
 ;; ** LaTeX
@@ -2080,7 +2096,12 @@ latter is superior for polytonic greek"
 
 
 ;; ** magit
-(global-set-key (kbd "C-x g") 'magit-status)
+(use-package magit
+  :bind
+  ("\C-xg" . magit-status)
+  )
+
+  
 ;; * BBDB
 
 (use-package bbdb-loaddefs
@@ -2165,12 +2186,13 @@ latter is superior for polytonic greek"
 	    (find-file-other-frame "~/Dropbox/Org_other/prayerlist.org.gpg")
 	    (org-mode)))))
 
-(progn
-  (setq last-nonmenu-event nil)
-  (if (y-or-n-p "Do a little journaling?")
-      (progn
-	(dmg-new-journal-entry)
-	(org-mode))))
+(if (y-or-n-p "Do a little journaling?")
+    (save-excursion
+      (org-open-link-from-string "[[file:~/Dropbox/GTD/worklog.org::*Journaling][Journaling]]" t)
+      (with-current-buffer "worklog.org"
+	(org-clock-in))
+      (dmg-new-journal-entry))
+  )
 
 
 ;; Local Variables:
