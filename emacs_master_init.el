@@ -1,7 +1,7 @@
 ;; * Header
 ;; .emacs file for Dan Griswold
 ;; hostname: cantor
-;; Time-stamp: "2016-01-02 19:08:17 alto3880 daniel"
+;; Time-stamp: "2016-02-07 13:57:57 alto3880 daniel"
 
 ;; * Initial settings
 (setq debug-on-error nil)
@@ -21,18 +21,36 @@
 	    "~/Dropbox/GTD/rsa.org"
 	    "~/Dropbox/GTD/coaching.org"
 	    "~/Dropbox/GTD/classis.org"
+	    "~/Dropbox/GTD/ce.org"
 	    "~/Dropbox/GTD/calendar.org"))
+
 
 (setq my/personal-agenda-files
       (list "~/Dropbox/GTD/life.org"
 	    "~/Dropbox/GTD/pso.org"
-	    "~/Dropbox/GTD/scholarship.org"
+	    "~/Dropbox/GTD/ce.org"
 	    "~/Dropbox/GTD/cot.org"
 	    "~/Dropbox/GTD/personal.org"
 	    "~/Dropbox/GTD/ci.org"
 	    "~/Dropbox/GTD/coaching.org"
 	    "~/Dropbox/GTD/minbook.org"
 	    "~/Dropbox/GTD/calendar.org"))
+
+(setq my/agenda-files-for-update-tasks
+      (if (string-equal system-name "prediger")
+	  (list "~/Dropbox/GTD/life.org"
+		"~/Dropbox/GTD/trinity.org"
+		"~/Dropbox/GTD/rsa.org"
+		"~/Dropbox/GTD/coaching.org"
+		"~/Dropbox/GTD/classis.org")
+	(list "~/Dropbox/GTD/life.org"
+	      "~/Dropbox/GTD/pso.org"
+	      "~/Dropbox/GTD/ce.org"
+	      "~/Dropbox/GTD/cot.org"
+	      "~/Dropbox/GTD/personal.org"
+	      "~/Dropbox/GTD/ci.org"
+	      "~/Dropbox/GTD/minbook.org")))
+
 
 (global-set-key (kbd "C-h V") 'customize-variable)
 
@@ -262,14 +280,20 @@
  '(canlock-password "4964a429d11273d9eb5886f7ab2e92a669c9da5e")
  '(case-fold-search t)
  '(color-theme-is-cumulative nil)
+ '(compilation-message-face (quote default))
  '(confirm-nonexistent-file-or-buffer nil)
  '(cperl-hairy t)
  '(cperl-lazy-help-time 1)
  '(csv-separators (quote ("," "	")))
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#657b83")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
  '(current-language-environment "ASCII")
  '(custom-safe-themes
    (quote
-    ("21e37baa0460d29970b6e2eabd562a509c2a72cb1f328edba4d51419ed66e0e8" "6f5dc752ca593ab14b2e0ad33a1cfea69c11397dfd641b08fdf61b779d37e858" "f024aea709fb96583cf4ced924139ac60ddca48d25c23a9d1cd657a2cf1e4728" "8577da1641ed4bdf255341ca92e3d0e49c9f4d574458f09ce78159690442cade" "85c59044bd46f4a0deedc8315ffe23aa46d2a967a81750360fb8600b53519b8a" "d0e97afdf241e6931af47ebe03bace80524f56bd6a2668204d33db47f728f484" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "050beead9159996a613ba4bc734de8b13b882f1c6596d1dffa4f51d096662cf6" "f89e21c3aef10d2825f2f079962c2237cd9a45f4dc1958091be8a6f5b69bb70c" "c4e6fe8f5728a5d5fd0e92538f68c3b4e8b218bcfb5e07d8afff8731cc5f3df0" "bd115791a5ac6058164193164fd1245ac9dc97207783eae036f0bfc9ad9670e0" "25f330cb050c7e7ec402af1b60243e8185a7837b455af0fa026593d4f48a78b2" "d070fa185078bf753dcfd873ec63be19fa36a55a0c97dc66848a6d20c5fffdad" "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6" "31bfef452bee11d19df790b82dea35a3b275142032e06c6ecdc98007bf12466c" "8bb1e9a22e9e9d405ca9bdf20b91301eba12c0b9778413ba7600e48d2d3ad1fb" "62b86b142b243071b5adb4d48a0ab89aefd3cf79ee3adc0bb297ea873b36d23f" "3ad55e40af9a652de541140ff50d043b7a8c8a3e73e2a649eb808ba077e75792" "fc6e906a0e6ead5747ab2e7c5838166f7350b958d82e410257aeeb2820e8a07a" "c377a5f3548df908d58364ec7a0ee401ee7235e5e475c86952dc8ed7c4345d8e" "3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "4dacec7215677e4a258e4529fac06e0231f7cdd54e981d013d0d0ae0af63b0c8" "f5e56ac232ff858afb08294fc3a519652ce8a165272e3c65165c42d6fe0262a0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "27470eddcaeb3507eca2760710cc7c43f1b53854372592a3afa008268bcf7a75" "e85dd0d1b43cc1d725db627298c2753b0c3e90dc0b195e80f09f97a4e1e5660c" "8281168b824a806489ca7d22e60bb15020bf6eecd64c25088c85b3fd806fc341" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "951e10f17de57de1e0c9cbeb44fcdda1b6c6d26beab40c3bd0abbfc38dd5c9c8" "0f8f704ffc80ef1f511e7a7b54977d11cbb32d772511a3f351aeb239c7d96b33" "98ad28b9f7df3e53b85b4f8fcc300c353aeeac097016c5ac897e870501d87be9" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "30fe7e72186c728bd7c3e1b8d67bc10b846119c45a0f35c972ed427c45bacc19" "71efabb175ea1cf5c9768f10dad62bb2606f41d110152f4ace675325d28df8bd" "501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" "6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" "54d1bcf3fcf758af4812f98eb53b5d767f897442753e1aa468cfeb221f8734f9" "1a7b620db388c2e4ae288794bbe7ed3b1e279cf67e8a51b6a678e4853467c748" "9ed7382aeb47f94ad0712ad57959354d03aa5df9" "f4c4f3eb70bd3dc14bbcca8a24d96719089fdd89" "207bb5b99ebc26b45e2d575342724c10236acd74" "ce4d82359c6d47de03485db52f9e1b44141666f7" "2bee775c3a3640f7c6f2c123d4ccaeab55f89962" "2eb734da07dcd6095f66709b0e85319e2624ef16" "549e06b318bd90ab10065db84e240f733b5af7fa" "64b170bd7204fe8e9c45b8f4f445dfb5f52d12ac" "2bfbc800988b899e101edd59f601ab530ea97686" "517aecb1202bfa31fd3c44473d72483c5166124d" default)))
+    ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "21e37baa0460d29970b6e2eabd562a509c2a72cb1f328edba4d51419ed66e0e8" "6f5dc752ca593ab14b2e0ad33a1cfea69c11397dfd641b08fdf61b779d37e858" "f024aea709fb96583cf4ced924139ac60ddca48d25c23a9d1cd657a2cf1e4728" "8577da1641ed4bdf255341ca92e3d0e49c9f4d574458f09ce78159690442cade" "85c59044bd46f4a0deedc8315ffe23aa46d2a967a81750360fb8600b53519b8a" "d0e97afdf241e6931af47ebe03bace80524f56bd6a2668204d33db47f728f484" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "050beead9159996a613ba4bc734de8b13b882f1c6596d1dffa4f51d096662cf6" "f89e21c3aef10d2825f2f079962c2237cd9a45f4dc1958091be8a6f5b69bb70c" "c4e6fe8f5728a5d5fd0e92538f68c3b4e8b218bcfb5e07d8afff8731cc5f3df0" "bd115791a5ac6058164193164fd1245ac9dc97207783eae036f0bfc9ad9670e0" "25f330cb050c7e7ec402af1b60243e8185a7837b455af0fa026593d4f48a78b2" "d070fa185078bf753dcfd873ec63be19fa36a55a0c97dc66848a6d20c5fffdad" "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6" "31bfef452bee11d19df790b82dea35a3b275142032e06c6ecdc98007bf12466c" "8bb1e9a22e9e9d405ca9bdf20b91301eba12c0b9778413ba7600e48d2d3ad1fb" "62b86b142b243071b5adb4d48a0ab89aefd3cf79ee3adc0bb297ea873b36d23f" "3ad55e40af9a652de541140ff50d043b7a8c8a3e73e2a649eb808ba077e75792" "fc6e906a0e6ead5747ab2e7c5838166f7350b958d82e410257aeeb2820e8a07a" "c377a5f3548df908d58364ec7a0ee401ee7235e5e475c86952dc8ed7c4345d8e" "3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "4dacec7215677e4a258e4529fac06e0231f7cdd54e981d013d0d0ae0af63b0c8" "f5e56ac232ff858afb08294fc3a519652ce8a165272e3c65165c42d6fe0262a0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "27470eddcaeb3507eca2760710cc7c43f1b53854372592a3afa008268bcf7a75" "e85dd0d1b43cc1d725db627298c2753b0c3e90dc0b195e80f09f97a4e1e5660c" "8281168b824a806489ca7d22e60bb15020bf6eecd64c25088c85b3fd806fc341" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "951e10f17de57de1e0c9cbeb44fcdda1b6c6d26beab40c3bd0abbfc38dd5c9c8" "0f8f704ffc80ef1f511e7a7b54977d11cbb32d772511a3f351aeb239c7d96b33" "98ad28b9f7df3e53b85b4f8fcc300c353aeeac097016c5ac897e870501d87be9" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "30fe7e72186c728bd7c3e1b8d67bc10b846119c45a0f35c972ed427c45bacc19" "71efabb175ea1cf5c9768f10dad62bb2606f41d110152f4ace675325d28df8bd" "501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" "6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" "54d1bcf3fcf758af4812f98eb53b5d767f897442753e1aa468cfeb221f8734f9" "1a7b620db388c2e4ae288794bbe7ed3b1e279cf67e8a51b6a678e4853467c748" "9ed7382aeb47f94ad0712ad57959354d03aa5df9" "f4c4f3eb70bd3dc14bbcca8a24d96719089fdd89" "207bb5b99ebc26b45e2d575342724c10236acd74" "ce4d82359c6d47de03485db52f9e1b44141666f7" "2bee775c3a3640f7c6f2c123d4ccaeab55f89962" "2eb734da07dcd6095f66709b0e85319e2624ef16" "549e06b318bd90ab10065db84e240f733b5af7fa" "64b170bd7204fe8e9c45b8f4f445dfb5f52d12ac" "2bfbc800988b899e101edd59f601ab530ea97686" "517aecb1202bfa31fd3c44473d72483c5166124d" default)))
+ '(debug-on-error nil)
  '(diary-display-function (quote (diary-fancy-display)))
  '(diary-list-entries-hook
    (quote
@@ -368,6 +392,29 @@
  '(gblogger-user-email "dgriswol@rochester.rr.com")
  '(global-font-lock-mode t nil (font-lock))
  '(global-magit-file-mode t)
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-symbol-colors
+   (--map
+    (solarized-color-blend it "#fdf6e3" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#586e75")
+ '(highlight-tail-colors
+   (quote
+    (("#eee8d5" . 0)
+     ("#B4C342" . 20)
+     ("#69CABF" . 30)
+     ("#69B7F0" . 50)
+     ("#DEB542" . 60)
+     ("#F2804F" . 70)
+     ("#F771AC" . 85)
+     ("#eee8d5" . 100))))
+ '(hl-bg-colors
+   (quote
+    ("#DEB542" "#F2804F" "#FF6E64" "#F771AC" "#9EA0E5" "#69B7F0" "#69CABF" "#B4C342")))
+ '(hl-fg-colors
+   (quote
+    ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
  '(holiday-bahai-holidays nil)
  '(holiday-christian-holidays
    (quote
@@ -530,6 +577,7 @@
      ("gnus-private" . "gnus-private"))))
  '(lpr-command "xpp")
  '(lpr-printer-switch "-d")
+ '(magit-diff-use-overlays nil)
  '(mail-user-agent (quote gnus-user-agent))
  '(max-lisp-eval-depth 500)
  '(menu-bar-mode t)
@@ -576,11 +624,14 @@
  '(org-agenda-category-icon-alist
    (quote
     (("trinity" "~/SpiderOak Hive/OrgIcons/church-icon.png" nil nil :ascent center)
-     ("personal" "~/SpiderOak Hive/OrgIcons/icon6.gif" nil nil :ascent center)
-     ("schedule" "~/SpiderOak Hive/OrgIcons/calendar_icon.gif" nil nil :ascent center)
+     ("personal" "~/SpiderOak Hive/OrgIcons/icon6.png" nil nil :ascent center)
+     ("schedule" "~/SpiderOak Hive/OrgIcons/calendar_icon.png" nil nil :ascent center)
      ("scholars" "~/SpiderOak Hive/OrgIcons/library-icon.png" nil nil :ascent center)
-     ("cot" "~/SpiderOak Hive/OrgIcons/writing_language_icon.gif" nil nil :ascent center)
-     (".*" "~/SpiderOak Hive/OrgIcons/check.gif" nil nil :ascent center))))
+     ("minbook" "~/SpiderOak Hive/OrgIcons/book.png" nil nil :ascent center)
+     ("pso" "~/SpiderOak Hive/OrgIcons/music.png" nil nil :ascent center)
+     ("google" "~/SpiderOak Hive/OrgIcons/appt.png" nil nil :ascent center)
+     ("cot" "~/SpiderOak Hive/OrgIcons/rca.png" nil nil :ascent center)
+     (".*" "~/SpiderOak Hive/OrgIcons/check.png" nil nil :ascent center))))
  '(org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 2 :formula %)))
  '(org-agenda-custom-commands
    (quote
@@ -718,7 +769,16 @@
        (org-agenda-start-with-clockreport-mode t)
        (org-agenda-files
 	(quote
-	 ("~/Dropbox/GTD/worklog.org"))))))))
+	 ("~/Dropbox/GTD/worklog.org")))))
+     ("u" "Unscheduled TODOs not assigned to a project" search "+TODO - SCHEDULED -DEADLINE -CURRENT"
+      ((org-agenda-skip-function
+	(quote
+	 (org-agenda-skip-entry-if
+	  (quote nottodo)
+	  (quote todo))))
+       (org-agenda-tag-filter-preset
+	(quote
+	 ("-PROJECT"))))))))
  '(org-agenda-diary-file "~/Dropbox/GTD/events.org")
  '(org-agenda-exporter-settings
    (quote
@@ -738,7 +798,7 @@
  '(org-agenda-sticky nil)
  '(org-agenda-use-time-grid nil)
  '(org-archive-mark-done nil)
- '(org-babel-load-languages (quote ((emacs-lisp . t) (lilypond . t))))
+ '(org-babel-load-languages (quote ((emacs-lisp . t) (lilypond . t) (gnuplot . t))))
  '(org-clock-into-drawer t)
  '(org-clock-mode-line-total (quote today))
  '(org-columns-default-format "%50ITEM %5CATEGORY(Cat) %Effort(e){:} %TAGS")
@@ -775,6 +835,7 @@
     (("article" "\\documentclass[12pt]{article}
 \\usepackage[margin=1in]{geometry}
 \\usepackage{fontspec}
+\\usepackage[doublespacing]{setspace}
 \\defaultfontfeatures{Mapping=tex-text}
 \\setmainfont{Cardo}
 \\usepackage[it,small]{titlesec}
@@ -830,7 +891,7 @@
       ("\\section{%s}" . "\\section*{%s}")
       ("\\subsection{%s}" . "\\subsection*{%s}")
       ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
-     ("agenda" "\\documentclass[12pt]{article}
+     ("agenda" "\\documentclass[11pt]{extarticle}
 \\usepackage[margin=1in]{geometry}
 \\usepackage[T1]{fontenc}
 \\usepackage{multicol}
@@ -959,6 +1020,8 @@
      ("cotagenda" "\\documentclass[12pt]{article}
 \\usepackage[margin=1in]{geometry}
 \\usepackage[T1]{fontenc}
+\\usepackage{fontspec}
+\\setromanfont[Mapping=tex-text]{Dustismo Roman}
 \\usepackage{multicol}
 \\usepackage{sectsty}
 \\sectionfont{\\centering\\large}
@@ -981,6 +1044,7 @@
 \\usepackage[hmargin=1in, vmargin=.70in]{geometry}
 \\usepackage{sectsty}
 \\usepackage{setspace}
+\\usepackage{palatino}
 \\newcommand{\\zaph}{\\usefont{OT1}{pzc}{m}{n}}
 \\sectionfont{\\centering\\zaph}
 \\subsectionfont{\\bfseries\\normalsize}
@@ -1058,6 +1122,7 @@
   ("@THINK" . 116)
   ("@READ" . 114)
   ("@WRITE" . 119)
+  ("@DRIVE" . 100)
   (:endgroup)
   (:startgroup "People Contexts")
   ("Jana" . 106)
@@ -1065,7 +1130,7 @@
   ("Tammi" . 84)
   (:endgroup)
   ("PROJECT" . 80))))
- '(org-tag-faces (quote (("PROJECT" . "#452E2E"))))
+ '(org-tag-faces nil)
  '(org-tags-match-list-sublevels t)
 '(org-time-clocksum-format
 (quote
@@ -1079,7 +1144,7 @@
   ("PERHAPS" :foreground "light blue" :weight bold))))
 '(org-todo-keywords
 (quote
- ((sequence "TODO(t)" "|" "WAIT(w!)" "DONE(d!)" "DROP(R!)")
+ ((sequence "MAYB(m)" "TODO(t)" "|" "WAIT(w!)" "DONE(d!)" "DROP(R!)")
   (sequence "PERHAPS(p)" "BREWING(b)" "CURRENT(c)" "|" "WRAPPED(f!)" "CANCELLED(x!)")
   (sequence "MUL(l)" "NOW(n)" "|" "OLD(o!)" "XXX(X!)")
   (sequence "REPEATING(r)"))))
@@ -1093,9 +1158,11 @@
   ("org" . "http://orgmode.org/elpa/"))))
 '(package-selected-packages
 (quote
- (ledger-mode org-plus-contrib smex web-mode zenburn-theme magit outshine olivetti dracula-theme counsel outlined-elisp-mode selectric-mode emmet-mode async org-mobile-sync dictionary multi-term paradox dired+ dired-sort dired-sort-menu bookmark+ org-password-manager use-package mode-icons wc-mode twittering-mode twilight-theme syslog-mode synonyms svg-clock soothe-theme solarized-theme sentence-highlight remember-theme rainbow-mode rainbow-delimiters pretty-lambdada pp-c-l php-mode persistent-scratch paredit org2blog org-bullets oauth2 nyan-mode naquadah-theme monokai-theme moe-theme minimap lua-mode lorem-ipsum less-css-mode ido-ubiquitous google-maps google gandalf-theme find-file-in-project dired-details diminish deft csv-mode conkeror-minor-mode col-highlight birds-of-paradise-plus-theme auctex anti-zenburn-theme)))
+ (org-plus-contrib solarized-theme dismal bind-key persistent-scratch use-package web-mode pretty-lambdada gnuplot ledger-mode smex magit outshine olivetti dracula-theme counsel outlined-elisp-mode selectric-mode emmet-mode org-mobile-sync dictionary multi-term paradox dired+ dired-sort dired-sort-menu bookmark+ org-password-manager mode-icons wc-mode twittering-mode twilight-theme syslog-mode svg-clock soothe-theme sentence-highlight remember-theme rainbow-mode rainbow-delimiters php-mode paredit org2blog org-bullets oauth2 nyan-mode naquadah-theme monokai-theme moe-theme minimap lua-mode lorem-ipsum less-css-mode ido-ubiquitous google-maps google gandalf-theme find-file-in-project dired-details diminish deft csv-mode conkeror-minor-mode col-highlight birds-of-paradise-plus-theme auctex anti-zenburn-theme)))
  '(paradox-execute-asynchronously t)
  '(paradox-github-token t)
+ '(pos-tip-background-color "#eee8d5")
+ '(pos-tip-foreground-color "#586e75")
  '(pretty-control-l-mode t)
  '(preview-auto-cache-preamble t)
 '(preview-default-option-list
@@ -1123,7 +1190,9 @@
   ("^image/" "I"))))
 '(safe-local-variable-values
 (quote
- ((major-mode . emacs-lisp-mode)
+ ((org-time-stamp-custom-formats "%b %d" . "<%m/%d/%y %a %H:%M>")
+  (org-latex-inactive-timestamp-format . "%s")
+  (major-mode . emacs-lisp-mode)
   (org-time-stamp-custom-formats "<%b %d>" . "<%I:%M%p>")
   (org-time-stamp-custom-formats "<%b %d>" . "<%H:%M>")
   (org-time-stamp-custom-formats "<%b %d>" . "<%m/%d/%y %a %H:%M>")
@@ -1142,7 +1211,11 @@
  '(sentence-end-double-space nil)
  '(shadow-noquery t)
  '(show-paren-mode t nil (paren))
- '(sort-fold-case t)
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
+ '(solarized-distinct-fringe-background t)
+ '(solarized-scale-org-headlines nil)
+ '(solarized-use-variable-pitch nil)
+ '(sort-fold-case t t)
  '(sudoku-download-method "wget")
  '(sudoku-level "evil")
  '(sudoku-puzzle-source "built-in")
@@ -1172,6 +1245,8 @@
   ("M-," . term-send-input)
   ("M-." . comint-dynamic-complete)
   ("M-DEL" . dmg-term-send-backward-kill-word))))
+ '(term-default-bg-color "#fdf6e3")
+ '(term-default-fg-color "#657b83")
  '(tex-alt-dvi-print-command "lp")
  '(tex-dvi-print-command "lp")
  '(time-stamp-format "%:y-%02m-%02d %02H:%02M:%02S %s %u")
@@ -1217,6 +1292,13 @@
  '(visual-line-fringe-indicators (quote (nil nil)))
  '(w3m-default-display-inline-images t)
  '(w3m-use-cookies t)
+'(weechat-color-list
+(quote
+ (unspecified "#fdf6e3" "#eee8d5" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#657b83" "#839496")))
+'(xterm-color-names
+["#eee8d5" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#073642"])
+'(xterm-color-names-bright
+["#fdf6e3" "#cb4b16" "#93a1a1" "#839496" "#657b83" "#6c71c4" "#586e75" "#002b36"])
  '(yas-wrap-around-region t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -1229,7 +1311,7 @@
  '(minibuffer-prompt ((t (:background "gray85" :foreground "orange red"))))
  '(minimap-font-face ((t (:height 30 :family "Bitstream Vera Sans Mono"))) t)
  '(muse-link-face ((t (:foreground "blue" :underline "red" :weight bold))) t)
- '(variable-pitch ((t (:height 1.2 :family "Century Schoolbook L")))))
+ '(variable-pitch ((t (:height 1.1 :family "Century Schoolbook L")))))
 
 
 ;; * Display settings
@@ -1282,8 +1364,8 @@
       (setq hcz-set-cursor-color-buffer (buffer-name)))))
 (add-hook 'post-command-hook 'hcz-set-cursor-color-according-to-mode)
 
-(autoload 'iimage-mode "iimage" "Support Inline image minor mode." t)
-(autoload 'turn-on-iimage-mode "iimage" "Turn on Inline image minor mode." t)
+;(autoload 'iimage-mode "iimage" "Support Inline image minor mode." t)
+;(autoload 'turn-on-iimage-mode "iimage" "Turn on Inline image minor mode." t)
 
 (diminish 'abbrev-mode)
 (diminish 'auto-fill-function)
@@ -1337,7 +1419,7 @@
   (shell-command (concat "zgrep " code " /usr/share/doc/miscfiles/na.phone.gz"))
   )
 
-(auto-image-file-mode)
+;(auto-image-file-mode 1)
 
 (use-package uniquify)
 
@@ -1655,7 +1737,7 @@ If not, display a word count for the whole buffer."
   (add-hook 'org-mode-hook
 	    (lambda()
 	      (flyspell-mode -1)
-	      (iimage-mode)
+;	      (iimage-mode)
 	      (when (string= "agendas.org" (buffer-name))
 		(message-box "Press <F12> for exporting agenda at location"))
 	      (org-password-manager-key-bindings)
@@ -1674,6 +1756,7 @@ If not, display a word count for the whole buffer."
     )
   
   (defvar my/org-basic-task-template "* TODO %^{Task}	%^g
+SCHEDULED: %^t
 :PROPERTIES:
 :Effort: %^{effort|0:30|0:05|0:15|0:45|1:00|1:30}
 :CREATED: %U
@@ -1694,8 +1777,8 @@ If not, display a word count for the whole buffer."
 	  ("tc" "Classis TODO" entry
 	   (file+headline "~/Dropbox/GTD/classis.org" "Tasks")
 	   ,my/org-basic-task-template :empty-lines 1)
-	  ("ts" "Synod TODO" entry
-	   (file+headline "~/Dropbox/GTD/synod.org" "Tasks")
+	  ("tr" "RSA TODO" entry
+	   (file+headline "~/Dropbox/GTD/rsa.org" "Tasks")
 	   ,my/org-basic-task-template :empty-lines 1)
 	  ("to" "Coaching TODO" entry
 	   (file+headline "~/Dropbox/GTD/coaching.org" "Tasks")
@@ -1783,7 +1866,7 @@ the same tree node, and the headline of the tree node in the Org-mode file."
 	(org-html-export-to-html)
 	(org-odt-export-to-odt)
 	(kill-buffer "wsprep.odt")
-	(start-process "Export Planning Sheet" nil "/home/dan/Software/expwplan")
+	(start-process "Export Planning Sheet" nil "~/Software/expwplan")
 	)
     )
 )
@@ -1800,17 +1883,14 @@ the same tree node, and the headline of the tree node in the Org-mode file."
   (interactive)
   (if (assoc-string (abbreviate-file-name (buffer-file-name)) org-agenda-files)
       (save-excursion
-;	(setq org-agenda-span (quote day))
-;	(setq org-deadline-warning-days 3)
-;	(setq org-agenda-use-time-grid nil)
 	(setq ogf-tmp org-agenda-files)
-	(setq org-agenda-files (quote ("~/Dropbox/GTD/personal.org" "~/Dropbox/GTD/ci.org" "~/Dropbox/GTD/cot.org" "~/Dropbox/GTD/scholarship.org" "~/Dropbox/GTD/minbook.org" "~/Dropbox/GTD/life.org" "~/Dropbox/GTD/pso.org")))
+	(setq org-agenda-files my/agenda-files-for-update-tasks)
 	(org-agenda nil "a" nil)
 	(set-buffer "*Org Agenda*")
 	(end-of-buffer)
-	(let ((items (concat "echo '" "orgwidget:set_text(\" " (number-to-string (- (string-to-number (format-mode-line "%l")) 2)) " \")" "'" "| awesome-client" )))
+	(let ((items (concat "echo '" "orgwidget:set_text(\" " (number-to-string (- (string-to-number (format-mode-line "%l")) 3)) " \")" "'" "| awesome-client" )))
 	  (shell-command items))
-;	(org-agenda-quit)
+	(org-agenda-quit)
 	(setq org-agenda-files ogf-tmp)
 	)
       ))
@@ -1857,7 +1937,6 @@ the same tree node, and the headline of the tree node in the Org-mode file."
   )
 
 
-
 (defun dmg/clockin ()
   (interactive)
   (let ((entry (org-entry-get nil "worklog" t)))
@@ -1865,9 +1944,22 @@ the same tree node, and the headline of the tree node in the Org-mode file."
 	(progn
 	  (org-open-link-from-string entry t)
 	  (with-current-buffer "worklog.org"
-	    (org-clock-in)))
-      (user-error "No worklog entry here"))) 
+	    (org-clock-in))
+	  (other-window 1)
+	  (delete-other-windows)
+	  )
+      (message "No worklog entry here"))) 
   )
+
+(defun dmg/agenda-clockin ()
+  (interactive)
+  (org-agenda-switch-to)
+  (dmg/clockin)
+  (switch-to-buffer "*Org Agenda*")
+  )
+
+(bind-key "i" 'dmg/agenda-clockin org-agenda-mode-map)
+
 
 
 ;; ** LaTeX
@@ -2007,7 +2099,7 @@ the same tree node, and the headline of the tree node in the Org-mode file."
   "Display a list of the tex files in the current
 directory with word count, reverse sorted by size"
   (interactive)
-  (shell-command "find . -name \"*.tex\" -print0 | xargs -n1 -0 -Ixxx sh -c 'printf \"%14s: %5s\n\" `basename xxx .tex`  `untex -aoe xxx |grep -v document | wc -w`' |sort -k 2 -n"
+  (shell-command "find . -name \"*.tex\" -print0 | xargs -n1 -0 -Ixxx sh -c 'printf \"%17s: %5s\n\" `basename xxx .tex`  `untex -aoe xxx |grep -v document | wc -w`' |sort -k 2 -n"
 		 "*Sermon Sizes*")
   (other-window 1)
   (switch-to-buffer "*Sermon Sizes*")
@@ -2183,7 +2275,7 @@ latter is superior for polytonic greek"
       (setq last-nonmenu-event nil)
       (if (y-or-n-p "Open the Prayer List?")
 	  (progn
-	    (find-file-other-frame "~/Dropbox/Org_other/prayerlist.org.gpg")
+	    (find-file "~/Dropbox/Org_other/prayerlist.org.gpg")
 	    (org-mode)))))
 
 (if (y-or-n-p "Do a little journaling?")
