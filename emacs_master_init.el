@@ -1,7 +1,7 @@
 ;; * Header
 ;; .emacs file for Dan Griswold
 ;; hostname: cantor
-;; Time-stamp: "2017-08-05 11:13:07 prediger dan"
+;; Time-stamp: "2017-08-12 11:23:14 prediger dan"
 
 ;; * Initial settings
 (when (display-graphic-p)
@@ -820,22 +820,6 @@ the same tree node, and the headline of the tree node in the Org-mode file."
 
 (use-package org-mobile)
 
-;; this seems to mess up the locate function on prediger
-;; (defvar monitor-attributes nil "Cached file attributes to be monitored.")
-;; (defun install-monitor (file secs)
-;;   (run-with-timer
-;;    0 secs
-;;    (lambda (f p)
-;;      (let ((att (elt (file-attributes f) 5)))
-;;        (unless (or (null monitor-attributes) (equalp monitor-attributes att))
-;;          (org-mobile-pull)
-;;                  (org-mobile-push)
-;;                  )
-;;        (setq monitor-attributes att)))
-;;    file secs))
-;; (defvar monitor-timer (install-monitor (concat org-mobile-directory "/mobileorg.org") 5)   "Check if MobileOrg/mobileorg.org is changed every 5s.")
-
-
 (defun dmg/new-journal-entry ()
   "Set up a new entry in journal.org"
   (interactive)
@@ -845,8 +829,7 @@ the same tree node, and the headline of the tree node in the Org-mode file."
   (next-line)
   (let ((lev (org-current-level)))
     (unless (= lev 4)
-      (insert-file-contents "~/Dropbox/Org_other/jtemplate.org")))
-  )
+      (insert-file-contents "~/Dropbox/Org_other/jtemplate.org"))))
 
 (defun dmg/agenda-export ()
   (interactive)
