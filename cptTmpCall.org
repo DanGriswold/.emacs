@@ -1,0 +1,6 @@
+* NEXT [#B] 📞 %^{Person to Call} > %^{Purpose of Call}%?            :@PHONE:
+SCHEDULED: %^t
+:PROPERTIES:
+:CREATED: %U
+:Effort: %^{effort|0:05|0:10|0:15|0:20|0:30|0:45|1:00|1:30}
+:END:

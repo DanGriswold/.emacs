@@ -1,0 +1,6 @@
+* CURRENT %^{Project Name}%?
+DEADLINE: %^t
+:PROPERTIES:
+:CREATED: %U
+:END:
+

@@ -1,0 +1,23 @@
+* CURRENT %^{Committee Name} %^{Month} mtg completed%?
+DEADLINE: %^{deadline}t
+:PROPERTIES:
+:CREATED: %U
+:END:
+*** NEXT [#B] Draft & send %\1 agenda                             :shlw:clsd:
+SCHEDULED: %^{agenda date}t
+:PROPERTIES:
+:Effort: 0:20
+:CREATED: %U
+:END:
+*** NEXT [#B] Prefill %\1 minutes                                 :shlw:clsd:
+SCHEDULED: %^{prefill minutes date}t
+:PROPERTIES:
+:Effort: 0:10
+:CREATED: %U
+:END:
+*** NEXT [#B] Draft & send %\1 minutes                            :shlw:clsd:
+SCHEDULED: %^{minutes date}t
+:PROPERTIES:
+:Effort: 0:15
+:CREATED: %U
+:END:
