@@ -2,7 +2,7 @@
 #+startup: oddeven
 
 * Header
-# Time-stamp: "2021-12-24 10:06:05 Gazelle"
+# Time-stamp: "2026-02-19 10:45 brahms"
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:4 h:4
 
@@ -14,7 +14,7 @@ I use one master init file, with a separate config file. I prefer using the cust
 
 * GTD setup
 
-Much of my workflow revolves around org mode. Here I explain my own approach to a "Getting Things Done" (GTD) methodology, and how I implement that in emacs.
+Much of my workflow revolves around org mode. Here I try to explain my own approach to a "Getting Things Done" (GTD) methodology, and how I implement that in emacs.
 
 ** "inbox"
 
@@ -28,7 +28,6 @@ Yet I do have a capturing step in org-mode. But it doesn't involve an inbox file
 
 
 The next sections cover how I implement this.
-
 
 
 ** multiple GTD org files 
@@ -68,7 +67,7 @@ A bit more on this:
 
 These three levels -- tasks, projects, and goals -- each have their own todo states:
 
-  - tasks: MAYBE, TODO, NEXT, WAIT, DONE, DROP
+  - tasks: MAYB, TODO, NEXT, WAIT, DONE, DROP
   - projects: PERHAPS, BREWING, CURRENT, SHIFTED, WRAPPED, CANCELED
   - goals: MUL, NOW, END, ZAP
 
@@ -102,21 +101,24 @@ And a view will have:
 
 ** Weekly review
 
-
 * Startup and Core Packages
- Set location for my customization file
+Set location for my customization file
  #+BEGIN_SRC emacs-lisp
    (setq custom-file "~/Dropbox/Emacs_git/emacs-custom.el")
    (load custom-file)
  #+END_SRC
 
- I don't know what this does, but it seems to be important, per [[https://github.com/syl20bnr/spacemacs/issues/3854][this]]
- #+BEGIN_SRC emacs-lisp
-   (load-library "url-handlers")
- #+END_SRC
-
+ Try to ignore useless bytecomp warnings
+ #+begin_src emacs-lisp
+   (defun dont-delay-compile-warnings (fun type &rest args)
+     (if (eq type 'bytecomp)
+         (let ((after-init-time t))
+           (apply fun type args))
+       (apply fun type args)))
+   (advice-add 'display-warning :around #'dont-delay-compile-warnings)
+ #+end_src
+ 
 Setup package manager and use-package
-
  #+BEGIN_SRC emacs-lisp
    (require 'package)
    (package-initialize)
@@ -132,217 +134,19 @@ Setup package manager and use-package
  #+END_SRC
 
 Get emacs to see my own lisp stuff
-#+BEGIN_SRC emacs-lisp
-  (push "~/.emacs.d/lisp/" load-path)
-  (require 'org-password-manager)
-#+END_SRC
- 
-* Display settings
-
-** Useful packages
- Mode icons
- #+BEGIN_SRC emacs-lisp :tangle yes
-   (when (display-graphic-p)
-     (setq eol-mnemonic-unix "(Unix)")
-     (mode-icons-mode))
- #+END_SRC
-
- I like diminish mode
  #+BEGIN_SRC emacs-lisp
- (use-package diminish)
+   (push "/home/dan/.emacs.d/lisp" load-path)
  #+END_SRC
 
-
- Ido - interactive do - switches between buffers and opens files and
- directories with a minimum of keystrokes.
- #+BEGIN_SRC emacs-lisp
- (use-package ido
-   :config
-   (ido-mode 1)
-   (ido-vertical-mode 1))
-
-
- (defun ido-recentf-open ()
-   "Use `ido-completing-read' to \\[find-file] a recent file"
-   (interactive)
-   (if (find-file (ido-completing-read "Find recent file: " recentf-list))
-       (message "Opening file...")
-     (message "Aborting")))
-
- #+END_SRC
-
- Get rid of `find-file-read-only' and replace it with something more useful
- #+BEGIN_SRC emacs-lisp
- (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
- #+END_SRC
-
-
- Ibuffer - operate on buffers like dired
- #+BEGIN_SRC emacs-lisp
-   (global-set-key "\C-x\C-b" 'ibuffer)
-   (defvar my/filtergroup
-     (if (string-equal system-name "prediger")
-         (quote "work")
-       (quote "home")))
-
-   (add-hook 'ibuffer-mode-hook 
-             (lambda ()
-               (ibuffer-auto-mode 1)
-               (ibuffer-switch-to-saved-filter-groups my/filtergroup)
-               (ibuffer-do-sort-by-alphabetic)))
- #+END_SRC
-
-
- uniquify - unique buffer names dependent on file name
- #+BEGIN_SRC emacs-lisp
-   (use-package uniquify)
-
-   (global-set-key [S-mouse-1] 'mouse-appearance-menu)
- #+END_SRC
-
- function to find out which face is which
- #+BEGIN_SRC emacs-lisp
-   (defun describe-face-at-point ()
-     "Return face used at point."
-     (interactive)
-     (let ((face (get-char-property (point) 'face)))
-       (if (listp face) 
-	   (progn
-	     (message (format "Full value: %s" (prin1-to-string face)))
-	     (setq face (car face))))
-       (describe-face face)))
-
-   (bind-key [f5] 'describe-face-at-point)
- #+END_SRC
-
- Give me an "Open Recent" submenu
- #+BEGIN_SRC emacs-lisp
-   (recentf-mode 1)
- #+END_SRC
-
- This looks interesting
+Load some of my stuff
  #+begin_src emacs-lisp
-   (add-hook 'Info-selection-hook 'info-colors-fontify-node)
- #+end_src
-** Themes and Defaults
- Set frame defaults and themes based on which computer is in use
- #+BEGIN_SRC emacs-lisp
-   (if (string-equal system-name "brahms")
-       (progn
-         (tooltip-mode -1)
-         (set-face-attribute 'variable-pitch nil :family "Spectral" :height 1.1))
-     (progn 
-       (set-face-attribute 'variable-pitch nil :family "Baskervald ADF Std")))
-   
-   (setq x-frame-normalize-before-maximize t)
- #+END_SRC
+   (require 'dmg-display)
+   (require 'dmg-etc)
+   (require 'dmg-completion)
+   (require 'dmg-info)
+   (require 'dmg-org)
+ #+end_src 
 
-I don't like eldoc, especially since I'm usually in org-mode
-#+begin_src emacs-lisp
-  (global-eldoc-mode -1)
-#+end_src
-** Cursor Color
- sets cursor color blue for regular, red for overwrite, black for read-only
- #+BEGIN_SRC emacs-lisp
-   (setq hcz-set-cursor-color-color ""
-	 hcz-set-cursor-color-buffer "")
-   (defun hcz-set-cursor-color-according-to-mode ()
-     "change cursor color according to some minor modes."
-     ;; set-cursor-color is somewhat costly, so we only call it when needed:
-     (let ((color
-	    (if buffer-read-only "black"
-	      (if overwrite-mode "red"
-		"blue"))))
-       (unless (and
-		(string= color hcz-set-cursor-color-color)
-		(string= (buffer-name) hcz-set-cursor-color-buffer))
-	 (set-cursor-color (setq hcz-set-cursor-color-color color))
-	 (setq hcz-set-cursor-color-buffer (buffer-name)))))
-   ;; (add-hook 'post-command-hook 'hcz-set-cursor-color-according-to-mode)
- #+END_SRC
-
-** Opacity
- #+BEGIN_SRC emacs-lisp
-   (defun djcb-opacity-modify (&optional dec)
-     "modify the transparency of the emacs frame; if DEC is t,
-   decrease the transparency, otherwise increase it in 10%-steps"
-     (let* ((alpha-or-nil (frame-parameter nil 'alpha)) ; nil before setting
-	    (oldalpha (if alpha-or-nil alpha-or-nil 100))
-	    (newalpha (if dec (- oldalpha 10) (+ oldalpha 10))))
-       (when (and (>= newalpha frame-alpha-lower-limit) (<= newalpha 100))
-	 (modify-frame-parameters nil (list (cons 'alpha newalpha))))))
-
-   ;; C-8 will increase opacity (== decrease transparency)
-   ;; C-9 will decrease opacity (== increase transparency
-   ;; C-0 will returns the state to normal
-
-   (defun dmg/dim ()
-     "Turn opacity way down / transparency way up"
-     (interactive)
-     (modify-frame-parameters nil `((alpha . 20))))
-
-   (defun dmg/full ()
-     "Turn opacity way up / transparency off"
-     (interactive)
-     (modify-frame-parameters nil `((alpha . 100))))
-
-   (when (display-graphic-p)
-     (progn
-       (global-set-key (kbd "C-7") (lambda() (interactive) (dmg/dim)))
-       (global-set-key (kbd "C-8") (lambda()(interactive)(djcb-opacity-modify)))
-       (global-set-key (kbd "C-9") (lambda()(interactive)(djcb-opacity-modify t)))
-       (global-set-key (kbd "C-0") (lambda()(interactive) (dmg/full)))))
-
-#+END_SRC
-
-** Fontsets
-Set my fonts so they look right for symbols and Greek  
-  #+BEGIN_SRC emacs-lisp
-    (set-fontset-font "fontset-default" nil
-		      (font-spec :name "Symbola"))
-
-    (set-fontset-font "fontset-default"
-		      'greek-iso8859-7
-		      "Gentium Plus")
-
-    (set-fontset-font "fontset-default"
-		      'greek
-		      (font-spec :family "Gentium Plus"))
-
-    (set-fontset-font "fontset-default"
-		      'hebrew
-		      (font-spec :family "Ezra SIL" :size 25))
-
-    (set-fontset-font "fontset-default"
-		      (cons (decode-char 'ucs #x1f00)
-			    (decode-char 'ucs #x1fef))
-		      "Gentium Plus")
-
-    (set-fontset-font "fontset-default"
-		      (cons (decode-char 'ucs #x0590)
-			    (decode-char 'ucs #x05f4))
-		      "Ezra SIL")
-
-    ;; (setq face-font-rescale-alist
-    ;;       '((".*SIL.*" . 1.5)))
-
-#+END_SRC
-
-** Smex (fun!)
-Change the M-x prompt
-
-#+begin_src emacs-lisp
-  (require 'smex-configs)
-#+end_src
-** Special font for variable pitch
-#+begin_src emacs-lisp
-  (defun dmg/variable-pitch-mode (&optional arg)
-    "My own Variable-pitch default-face mode.
-  An interface to `buffer-face-mode' which uses the `dmg-variable-pitch' face.
-  Besides the choice of face, it is the same as `buffer-face-mode'."
-    (interactive (list (or current-prefix-arg 'toggle)))
-    (buffer-face-mode-invoke (font-face-attributes "Alex Brush-30") t nil))
-#+end_src
 
 * Editing
 ** General editing prefs
@@ -380,34 +184,13 @@ Change the M-x prompt
          lazy-lock-stealth-time nil
          x-super-keysym 'alt)
 
-   ;; (add-hook 'text-mode-hook
-   ;; 	  (lambda ()
-   ;; 	    (variable-pitch-mode 1)
-   ;; 	    ))
 
    (pending-delete-mode 1)
 
    (global-font-lock-mode t)
  #+END_SRC
   
- I think this lets me use tramp for sudo editing a remote file in emacs.
-  (I never use this)
- #+BEGIN_SRC emacs-lisp :tangle no
-   (use-package tramp
-     :config
-     (progn
-       ;; Allow to use: /sudo:user@host:/path/to/file
-       (add-to-list 'tramp-default-proxies-alist
-		    '(".*" "\\`.+\\'" "/ssh:%h:"))))
-   (use-package tramp-sh)
- #+END_SRC
-
- Persistent scratch buffer is quite handy
- #+BEGIN_SRC emacs-lisp
-   (use-package persistent-scratch)
-   (persistent-scratch-setup-default)
- #+END_SRC
-  
+ 
  Abbreviations
   #+BEGIN_SRC emacs-lisp
     (setq-default abbrev-mode t)
@@ -431,14 +214,7 @@ Change the M-x prompt
 
  Unfill paragraph
  #+BEGIN_SRC emacs-lisp
-   (defun dmg/unfill-paragraph ()
-     (interactive)
-     (let ((fill-column (point-max)))
-       (if (use-region-p)
-	   (fill-region (region-beginning) (region-end))
-	 (fill-paragraph nil t))))
-
-   (bind-key [f12] 'dmg/unfill-paragraph)
+   (bind-key [f12] 'dmg-unfill-paragraph)
  #+END_SRC
   
 ** LaTeX
@@ -446,326 +222,35 @@ Change the M-x prompt
    (use-package tex
      :defer t
      :ensure auctex
-     :config
-     (add-hook 'LaTeX-mode-hook (lambda ()
-                                  (outline-minor-mode)
-                                  (mixed-pitch-mode t)
-                                  (flyspell-mode t)
-                                  (TeX-fold-mode 1)))
-     (TeX-add-style-hook
-       "sermon"
-       (lambda ()
-         (TeX-add-symbols
-          '("title"
-            (TeX-arg-string "Title")
-            (TeX-arg-string "Date")
-            (TeX-arg-string "Bible 1")
-            (TeX-arg-string "Bible 2"))))))
+     :hook ((LaTeX-mode . outline-minor-mode)
+   	 (LaTeX-mode . variable-pitch-mode)
+            (LaTeX-mode . flyspell-mode)
+            (LaTeX-mode . TeX-fold-mode)
+   	 (LaTeX-mode . dmg-add-tex-style)))
 
    (use-package latex
      :defer t
      :config
+     (require 'dmg-latex)
      (bind-keys :map LaTeX-mode-map
-                ("'" . dmg/emph)
-                ([f6] . dmg/sermonsizes)
-                ([f7] . dmg/mkverse)
+                ("'" . dmg-emph)
+                ([f6] . dmg-sermonsizes)
+                ([f7] . dmg-mkverse)
                 ([S-return] . "\\\\\n")))
 
-   (with-eval-after-load "tex-fold"
-   (defun TeX-fold-overfull-p (ov-start ov-end display-string)
-     "Return t if an overfull line will result after adding an overlay.
-   The overlay extends from OV-START to OV-END and will display the
-   string DISPLAY-STRING."
-     (and
-      (save-excursion
-        (goto-char ov-end)
-        (search-backward "\n" ov-start t))
-      (not (string-match "\n" display-string))
-      (> (+ (- ov-start
-               (save-excursion
-                 (goto-char ov-start)
-                 (line-beginning-position)))
-            (length display-string)
-            (- (save-excursion
-                 (goto-char ov-end)
-                 (line-end-position))
-               ov-end))
-         (current-fill-column)))))
+
  #+END_SRC
 
-** Org-mode
-
-*** The main use-package call for org
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package org
-    ;; :diminish outline-minor-mode
-    :hook ((org-mode . visual-line-mode))
-  
-    :bind (("\C-c l" . org-store-link)
-           ("\C-c a" . org-agenda)
-           ("\C-c c" . org-capture)
-           :map org-mode-map
-           ;; ([(control tab)] . other-window)
-           ("C-a" . org-beginning-of-line)
-           ("C-e" . org-end-of-line)
-           ([f12]  . dmg/agenda-export))
-    :config
-    (require 'org-crypt)
-    (org-crypt-use-before-save-magic)
-    (setq org-agenda-overriding-columns-format
-          "%50ITEM(Task) %5Effort(e){:} %TAGS"))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp  
-  (use-package org-superstar
-    :hook (org-mode . org-superstar-mode))
-
-  (use-package org-autolist
-    :diminish org-autolist-mode
-    :hook (org-mode . org-autolist-mode))
-
-  (defun dmg-org-hooks ()
-    ;; (org-password-manager-key-bindings)
-    (setq-local eldoc-documentation-function #'ignore)
-    (org-variable-pitch-minor-mode)
-    (emojify-mode))
-
-  ;; (add-hook 'org-mode-hook #'dmg-org-hooks)
-
-#+END_SRC
-
-  
-*** org-agenda
-  #+BEGIN_SRC emacs-lisp
-    (use-package org-agenda
-      :defer t
-      :config
-
-      (defun my/org-todo-age (&optional pos)
-        (let ((stamp (org-entry-get (or pos (point)) "CREATED" t)))
-          (when stamp
-            (let* ((created
-                    (org-time-string-to-time
-                     (org-entry-get (or pos (point)) "CREATED" t)))
-                   (age (time-subtract (current-time) created)))
-              (format "%.0fd" (time-to-number-of-days age))))))
-
-      (defun my/org-todo-daysleft (&optional pos)
-        (let ((stamp (org-entry-get (or pos (point)) "DEADLINE" t)))
-          (when stamp
-            (let* ((goaldate
-                    (org-time-string-to-time
-                     (org-entry-get (or pos (point)) "DEADLINE" t)))
-                   (age (time-subtract goaldate (current-time))))
-              (format "%.0fd" (time-to-number-of-days age))))))
-
-      (defun my/org-todo-monthyr (&optional pos)
-        (let ((stamp (org-entry-get (or pos (point)) "DEADLINE" t)))
-          (when stamp
-            (let* ((deadlndate
-                    (org-time-string-to-time
-                     (org-entry-get (or pos (point)) "DEADLINE" t))))
-              (format-time-string "%b '%y" deadlndate)))))
-
-
-      (add-hook 'org-agenda-mode-hook 'emojify-mode)
-      )
-
-  #+END_SRC
-
-
-
-*** Some of my own org specific functions
-  #+BEGIN_SRC emacs-lisp
-    (defun dmg/clockin ()
-      (interactive)
-      (let ((id (org-entry-get nil "worklog" t))
-            (effort (org-entry-get nil "Effort" t)))
-        (if id
-            (progn
-              (org-id-goto id)
-              (with-current-buffer "worklog.org"
-                (if effort (org-entry-put nil "Effort" effort))
-                (org-clock-in))
-              (other-window 1)
-              (delete-other-windows))
-          (message "No worklog entry here"))))
-
-    (defun dmg/agenda-clockin ()
-      (interactive)
-      (org-agenda-switch-to)
-      (dmg/clockin)
-      (switch-to-buffer "*Org Agenda(a)*"))
-
-    (defun dmg/new-journal-entry ()
-      "Set up a new entry in journal.org"
-      (interactive)
-      (find-file "~/Dropbox/Management/journal.org.gpg")
-      (setq-local eldoc-documentation-function #'ignore)
-      (org-datetree-find-date-create (org-date-to-gregorian
-                                      (format-time-string "%Y-%m-%d %H:%M")))
-      (next-line)
-      (let ((lev (org-current-level)))
-        (unless (= lev 4)
-          (insert-file-contents "~/Dropbox/Org_other/jtemplate.org"))))
-
-    (defun dmg/new-journal-weekly-entry ()
-      "Set up a new week entry in journal.org"
-      (interactive)
-      (find-file "~/Dropbox/Management/journal.org.gpg")
-      (setq-local eldoc-documentation-function #'ignore)
-      (org-datetree-find-date-create (org-date-to-gregorian
-                                      (format-time-string "%Y-%m-%d %H:%M")))
-      (goto-char (point-max))
-      (insert-file-contents "~/Dropbox/Org_other/jwtemplate.org"))
-
-    (defun dmg/new-journal-weekly-dentry ()
-      "Set up a new weekly entry in today's org-roam-dailies daily-note"
-      (interactive)
-      (org-roam-dailies-goto-today)
-      (goto-char (point-max))
-      (insert-file-contents "~/Dropbox/Org_other/jwtemplate_dailies.org"))
-
-    (defun dmg/new-journal-monthly-entry ()
-      "Set up a new month entry in journal.org"
-      (interactive)
-      (find-file "~/Dropbox/Management/journal.org.gpg")
-      (setq-local eldoc-documentation-function #'ignore)
-      (org-datetree-find-date-create (org-date-to-gregorian
-                                      (format-time-string "%Y-%m-%d %H:%M")))
-      (goto-char (point-max))
-      (insert-file-contents "~/Dropbox/Org_other/jmtemplate.org"))
-
-    (defun dmg/new-journal-monthly-dentry ()
-      "Set up a new weekly entry in today's org-roam-dailies daily-note"
-      (interactive)
-      (org-roam-dailies-goto-today)
-      (goto-char (point-max))
-      (insert-file-contents "~/Dropbox/Org_other/jmtemplate_dailies.org"))
-
-    (defun dmg/new-theology-journal-entry ()
-      "Set up a new entry in theojournal.org"
-      (interactive)
-      (find-file "~/Dropbox/Brain/theojournal.org")
-      (setq-local eldoc-documentation-function #'ignore)
-      (org-datetree-find-date-create (org-date-to-gregorian
-                                      (format-time-string "%Y-%m-%d %H:%M")))
-      (goto-char (point-max)))
-
-    (defun dmg/agenda-export ()
-      (interactive)
-      (message "Export starting ...")
-      (save-excursion
-        (org-up-heading-safe)
-        (org-up-heading-safe)
-        (org-open-file (org-latex-export-to-pdf nil t)))
-      (message "Export completed"))
-
-    (defun dmg/show_keys ()
-      "display window of interesting emacs keystrokes"
-      (interactive)
-      (find-file-other-frame "~/Dropbox/Org_other/keys.org")
-      (org-mode)
-      (use-local-map (copy-keymap org-mode-map))
-      (local-set-key "q" 'delete-frame)
-      (set-frame-parameter nil 'menu-bar-lines 0)
-      (setq mode-line-format nil)
-      (when (display-graphic-p)
-        (set-frame-size (selected-frame) 49 11)
-        (set-frame-position (selected-frame) 0 28)))
-
-    (bind-key [M-f1] 'dmg/show_keys)
-
-    (use-package ox-odt)
-
-    (add-hook 'kill-emacs-query-functions
-              'custom-prompt-customize-unsaved-options)
-
-
-    (defun dmg/compile-book ()
-      (interactive)
-      (save-window-excursion
-        (if (get-buffer "bookmaster.org")
-            (switch-to-buffer "bookmaster.org")
-          (find-file "~/Wp/Scholarship/CallingCounterpoint/bookmaster.org"))
-        (org-latex-export-to-pdf)))
-
-  #+END_SRC
-
-
-*** A few other org items
-  #+BEGIN_SRC emacs-lisp
-    (use-package org-capture
-     :defer t)
-
-    (use-package ox-pandoc)
-
-    (use-package org-protocol)
-
-    (autoload 'org-in-clocktable-p "org-clock")
-
-    (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-  #+END_SRC
-
-   have bold/italic work over several lines
-  #+BEGIN_SRC emacs-lisp
-    (setcar (nthcdr 4 org-emphasis-regexp-components) 30)
-    (org-set-emph-re 'org-emphasis-regexp-components
-		     org-emphasis-regexp-components)
-  #+END_SRC
-
-  I like to have my clocks in org persist
-  #+BEGIN_SRC emacs-lisp
-    (org-clock-persistence-insinuate)
-  #+END_SRC
-
-  Fancy priorities
-  #+begin_src emacs-lisp
-    (use-package org-fancy-priorities
-      :diminish
-      :demand t
-      :defines org-fancy-priorities-list
-      :hook (org-mode . org-fancy-priorities-mode)
-      :config
-      (unless (char-displayable-p ?❗)
-        (setq org-fancy-priorities-list '("HIGH" "MID" "LOW" "MEH"))))
-  #+end_src
-
-  Prettify symbols for src blocks in org
-  #+begin_src emacs-lisp
-    (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-					   ("#+END_SRC" . "†")
-					   ("#+begin_src" . "†")
-					   ("#+end_src" . "†")
-					   (">=" . "≥")
-					   ("=>" . "⇨")))
-    (setq prettify-symbols-unprettify-at-point 'right-edge)
-    (add-hook 'org-mode-hook 'prettify-symbols-mode)
-
-  #+end_src
-
-  Icons for categories in the agendas
-  #+begin_src emacs-lisp
-    (require 'all-the-icons)
-    (defun dmg/agenda-icon-material (name)
-      "Returns an all-the-icons-material icon"
-      (list (all-the-icons-material name)))
-  
-    (setq org-agenda-category-icon-alist
-          `(("clerk" ,(dmg/agenda-icon-material "details") nil nil :ascent center)
-            ("recur" ,(dmg/agenda-icon-material "repeat") nil nil :ascent center)
-            ("theo" ,(dmg/agenda-icon-material "book") nil nil :ascent center)
-            (".*" ,(dmg/agenda-icon-material "check") nil nil :ascent center)))
-  #+end_src 
 ** Hydra
 #+BEGIN_SRC emacs-lisp
   (use-package hydra
+    :defer t
     :bind
-    ([f9] . dmg/hydra-emoji-template/body)
+    ([f9] . dmg-hydra-emoji-template/body)
     ([f8] . hydra-journal/body)
-  
+
     :config
-    (defhydra dmg/hydra-emoji-template (:color blue :hint nil)
+    (defhydra dmg-hydra-emoji-template (:color blue :hint nil)
       "
   _t_hink     _b_uy      _a_sk     _p_ick/decide
   _c_all      _l_ook     _w_rite   inbox _z_ero!
@@ -778,402 +263,170 @@ Change the M-x prompt
       ("z" (insert "📥0⃣"))
       ("l" (insert "🔎"))
       ("w" (insert "🖋")))
-  
+
     (defhydra hydra-journal (:color blue
                              :hint nil)
       "
   _d_: Daily journal     _w_: Weekly journal     _m_: Monthly journal    _t_: Theo journal
   "
-      ;; ("d" (dmg/new-journal-entry))
-      ("d" (org-roam-dailies-capture-today))
-      ("w" (dmg/new-journal-weekly-dentry))
-      ("m" (dmg/new-journal-monthly-dentry))
-      ("t" (dmg/new-theology-journal-entry))))
-  
+      ;; ("d" (dmg-new-journal-entry))
+      ;; ("d" (org-roam-dailies-capture-today))
+      ("d" (dmg-new-journal-daily-dentry))
+      ("w" (dmg-new-journal-weekly-dentry))
+      ("m" (dmg-new-journal-monthly-dentry))
+      ("t" (dmg-new-theology-journal-entry))))
+
+  (use-package needs_hydras
+    :after (hydra)
+    :bind ([f4] . dmg-hydra-needs-main/body))
+
+
      #+END_SRC
 
      This is pretty cool. It works like a speed command. Type a "<",
      and a hydra pops up for inserting org-mode block templates. I
      found it [[http://oremacs.com/2015/03/07/hydra-org-templates/][here]] (I think)
 
-     #+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp
 
-	 (defhydra hydra-org-template (:color blue :hint nil)
-	   "
-       _c_enter  _q_uote    _L_aTeX:
-       _l_atex   _e_xample  _i_ndex:
-       _a_scii   _v_erse    _I_NCLUDE:
-       _s_rc     ^ ^        _H_TML:
-       _h_tml    ^ ^        _A_SCII:
-       "
-	   ("s" (hot-expand "<s"))
-	   ("e" (hot-expand "<e"))
-	   ("q" (hot-expand "<q"))
-	   ("v" (hot-expand "<v"))
-	   ("c" (hot-expand "<c"))
-	   ("l" (hot-expand "<l"))
-	   ("h" (hot-expand "<h"))
-	   ("a" (hot-expand "<a"))
-	   ("L" (hot-expand "<L"))
-	   ("i" (hot-expand "<i"))
-	   ("I" (hot-expand "<I"))
-	   ("H" (hot-expand "<H"))
-	   ("A" (hot-expand "<A"))
-	   ("<" self-insert-command "ins")
-	   ("o" nil "quit"))
+    (defhydra hydra-org-template (:color blue :hint nil)
+      "
+  _c_enter  _q_uote    _L_aTeX:
+  _l_atex   _e_xample  _i_ndex:
+  _a_scii   _v_erse    _I_NCLUDE:
+  _s_rc     ^ ^        _H_TML:
+  _h_tml    ^ ^        _A_SCII:
+  "
+      ("s" (hot-expand "<s"))
+      ("e" (hot-expand "<e"))
+      ("q" (hot-expand "<q"))
+      ("v" (hot-expand "<v"))
+      ("c" (hot-expand "<c"))
+      ("l" (hot-expand "<l"))
+      ("h" (hot-expand "<h"))
+      ("a" (hot-expand "<a"))
+      ("L" (hot-expand "<L"))
+      ("i" (hot-expand "<i"))
+      ("I" (hot-expand "<I"))
+      ("H" (hot-expand "<H"))
+      ("A" (hot-expand "<A"))
+      ("<" self-insert-command "ins")
+      ("o" nil "quit"))
 
-       (require 'org-tempo) ; Required from org 9 onwards for old template expansion
-	 ;; Reset the org-template expnsion system, this is need after upgrading to org 9 for some reason
-       (setq org-structure-template-alist (eval (car (get 'org-structure-template-alist 'standard-value))))
-       (defun hot-expand (str &optional mod header)
-	   "Expand org template.
+  (require 'org-tempo) ; Required from org 9 onwards for old template expansion
+    ;; Reset the org-template expnsion system, this is need after upgrading to org 9 for some reason
+  (setq org-structure-template-alist (eval (car (get 'org-structure-template-alist 'standard-value))))
+  (defun hot-expand (str &optional mod header)
+      "Expand org template.
 
-       STR is a structure template string recognised by org like <s. MOD is a
-       string with additional parameters to add the begin line of the
-       structure element. HEADER string includes more parameters that are
-       prepended to the element after the #+HEADER: tag."
-	   (let (text)
-	     (when (region-active-p)
-	       (setq text (buffer-substring (region-beginning) (region-end)))
-	       (delete-region (region-beginning) (region-end))
-	       (deactivate-mark))
-	     (when header (insert "#+HEADER: " header) (forward-line))
-	     (insert str)
-	     (org-tempo-complete-tag)
-	     (when mod (insert mod) (forward-line))
-	     (when text (insert text))))
+  STR is a structure template string recognised by org like <s. MOD is a
+  string with additional parameters to add the begin line of the
+  structure element. HEADER string includes more parameters that are
+  prepended to the element after the #+HEADER: tag."
+      (let (text)
+        (when (region-active-p)
+          (setq text (buffer-substring (region-beginning) (region-end)))
+          (delete-region (region-beginning) (region-end))
+          (deactivate-mark))
+        (when header (insert "#+HEADER: " header) (forward-line))
+        (insert str)
+        (org-tempo-complete-tag)
+        (when mod (insert mod) (forward-line))
+        (when text (insert text))))
 
-       (define-key org-mode-map "<"
-	 (lambda () (interactive)
-	   (if (or (region-active-p) (looking-back "^"))
-	       (hydra-org-template/body)
-	     (self-insert-command 1))))
-
+  (define-key org-mode-map "<"
+    (lambda () (interactive)
+      (if (or (region-active-p) (looking-back "^"))
+          (hydra-org-template/body)
+        (self-insert-command 1))))
 
 #+END_SRC
 
      I wanted a quick way to dired my frequently visited directories:
 
-     #+begin_src emacs-lisp :tangle yes
-       (defhydra dmg/hydra-dired
+         #+begin_src emacs-lisp :tangle no
+       (defhydra dmg-hydra-dired
          (:color blue :hint nil)
          "
-       _c_SS _e_xCom _f_orms _m_SS _r_J _s_SS _t_op
+       _c_SS _e_xCom _f_orms _m_SS _s_SS _t_op
        "
-         ("c" (dired "~/HC/Committees/CSS/"))
-         ("e" (dired "~/HC/Committees/ExCom/"))
-         ("f" (dired "~/HC/Coordinator/Forms/"))
-         ("m" (dired "~/HC/Committees/MSS/"))
-         ("r" (dired "~/HC/Committees/RJ/"))
-         ("s" (dired "~/HC/Committees/SSS/"))
-         ("t" (dired "~/HC/"))
+         ("c" (dirvish "~/HC/Committees/CSS/"))
+         ("e" (dirvish "~/HC/Committees/ExCom/"))
+         ("f" (dirvish "~/HC/Forms/"))
+         ("m" (dirvish "~/HC/Committees/MSS/"))
+         ("s" (dirvish "~/HC/Committees/SSS/"))
+         ("t" (dirvish "~/HC/"))
          )
 
-       (bind-key "C-c d" 'dmg/hydra-dired/body)
+       (bind-key "C-c d" 'dmg-hydra-dired/body)
     #+end_src
 
-** latex functions
-   ldots.el -- changes three dots to `\ldots' on the fly
+    Here's a hydra for my current writing projects
+    #+begin_src emacs-lisp
+      (defhydra dmg-hydra-writingprojects
+        (:color blue :hint nil)
+        "
+      _c_ Calling in Counterpoint
+      _r_ Reformed theololgy
+      _e_ Evangelicalism
+      "
+        ("c" (dired "~/Wp/Scholarship/CallingCounterpoint/"))
+        ("r" (find-file "~/Wp/Scholarship/RCA_theology/intro_draft.org"))
+        ("e" (find-file "~/Wp/Scholarship/Understanding Evangelicalism/theological markers.org")))
 
-   Filename: ldots.el
-   Copyright (C) 2005 Jesse Rosenthal
-   Author: Jesse Rosenthal <jesse.k.rosenthal@gmail.com>
-   Maintainer: Jesse Rosenthal <jesse.k.rosenthal@gmail.com>
-   Created: 30 Oct 2005
-   Description: On-the-fly rewriting of three dots as `\ldots'.
- #+BEGIN_SRC emacs-lisp
-   (defun test-for-periods()
-     (save-excursion
-       (let ((first (char-to-string (char-before (- (point) 1))))
-	     (second (char-to-string (preceding-char))))
-	 (concat first second))))
+      (bind-key "C-c <f12>" 'dmg-hydra-writingprojects/body)
 
-   (defun period-to-ldots()
-     (interactive)
-     (cond ((and (/= (point) 1) (/= (point) 2) (string= (test-for-periods) ".."))
-	    (backward-delete-char 2)
-	    (insert "\\ldots"))
-	   (t (insert "."))))
-
-   (defun latex-auto-ldots ()
-     (bind-key "." 'period-to-ldots LaTeX-mode-map))
-
-   (add-hook 'LaTeX-mode-hook 'latex-auto-ldots)
- #+END_SRC
-
- Makes the region a "verse" environment, splitting on commas or semicolons
- #+BEGIN_SRC emacs-lisp
-   (defun dmg/mkverse (begin end)
-     (interactive "r")
-     (if (eq major-mode 'latex-mode)
-	 (save-restriction
-	   (narrow-to-region begin end)
-	   (LaTeX-insert-environment "verse")
-	   (narrow-to-region begin (- end 1))
-	   (goto-char (point-min))
-	   (while (search-forward-regexp
-		   "\\,”\\|\\.”\\|\\?”\\|\\,\\|\\.\\|\\?" nil t)
-	     (replace-match "\\&\\\\\\\\ \n"))
-	   (goto-char (point-min))
-	   (insert "\n")
-	   (widen)
-	   (forward-line 1)
-	   (fill-paragraph))))
- #+END_SRC
-
- Show the word count of the tex files in current directory
- #+BEGIN_SRC emacs-lisp
-   (defun dmg/sermonsizes ()
-     "Display a list of the tex files in the current
-   directory with word count, reverse sorted by size"
-     (interactive)
-     (shell-command "find . -name \"*.tex\" -print0 | xargs -n1 -0 -Ixxx sh -c 'printf \"%20s: %5s\n\" `basename xxx .tex`  `detex xxx |grep -v document | wc -w`' |sort -k 2 -n"
-		    "*Sermon Sizes*")
-     (other-window 1)
-     (switch-to-buffer "*Sermon Sizes*")
-     (view-mode t)
-     (setq view-exit-action
-	   (lambda (buffer)
-	     (kill-buffer "*Sermon Sizes*")
-	     (other-window 1)
-	     (delete-other-windows))))
- #+END_SRC
-
- Narrow this LaTeX buffer to just the body text
- #+BEGIN_SRC emacs-lisp
-   (defun dmg/narrow-latex ()
-     (interactive)
-     (narrow-to-region (+ 18 (string-match "begin{document}"(buffer-string)))
-		       (- (string-match "end{document}"(buffer-string)) 1)))
- #+END_SRC
-
-
- Greek stuff
- #+BEGIN_SRC emacs-lisp
-   (defun dmg/greek-switch ()
-     "Switch the font for variable face between Century Schoolbook L and
-   Galatia SIL. The former is more readable for latin script, while the
-   latter is superior for polytonic greek"
-     (interactive)
-     (let ((fa (prin1-to-string
-		  (custom-face-attributes-get 'variable-pitch (selected-frame))))
-	   )
-       (message "%s" "switching font")
-       (if (string-match "SIL" fa)
-	   (set-face-font 'variable-pitch "Century Schoolbook L-16")
-	 (set-face-font 'variable-pitch "Galatia SIL-16"))))
- #+END_SRC
-
- Smart quotes in LaTeX
- #+BEGIN_SRC emacs-lisp
-   (setq font-latex-quote-list
-	 '(("“" "”")
-	   ("``" "''")))
- #+END_SRC
-
- easy emphasis
- #+BEGIN_SRC emacs-lisp
-   (defun dmg/emph (&optional arg)
-     "As in cdlatex-mode, puts \emph{} around the word on \"'e\""
-     (interactive "p")
-     (or arg (setq arg 1))
-     (let ((char (read-key-sequence "?")))
-       (if (string= char "e")
-	   (progn
-	     (insert "}")
-	     (save-excursion
-	       (left-word arg)
-	       (insert "\\emph{" )))
-	 (insert "'" char))))
- #+END_SRC
-
- fold buffer on save
- #+BEGIN_SRC emacs-lisp
-   (defun dmg/latex-tfb ()
-     (if (eq major-mode 'latex-mode)
-	 (progn
-	   (TeX-fold-buffer))))
-   (add-hook 'after-save-hook 'dmg/latex-tfb)
- #+END_SRC
-
-
- functions for converting quotes
- #+BEGIN_SRC emacs-lisp
-   (defun convert-quotes ()
-     "Convert regular quotes to LaTeX quotes."
-     (interactive)
-     (when (eq major-mode 'latex-mode)
-       (push-mark)
-       (while (re-search-forward " \"" nil t)
-	 (replace-match "``" nil nil))
-       (beginning-of-buffer)
-       (while (re-search-forward "\\([^ ]\\)\"" nil t)
-	 (replace-match "\\1''" nil nil))
-       (pop-mark)
-       (exchange-point-and-mark)))
-
-   (defun dmg/convert-quotes ()
-     "Convert LaTeX ascii quotes with unicode quotes"
-     (interactive)
-     (when (eq major-mode 'latex-mode)
-       (push-mark)
-       (while (re-search-forward "``" nil t)
-	 (replace-match "“" nil nil))
-       (beginning-of-buffer)
-       (while (re-search-forward "''" nil t)
-	 (replace-match "”" nil nil))
-       (pop-mark)
-       (exchange-point-and-mark)))
- #+END_SRC
-
-** web/php setup
-#+BEGIN_SRC emacs-lisp
-  (use-package web-mode
-    :mode
-    ("\\.html$" . web-mode)
-    ("\\.htm$" . web-mode)
-    ("\\.asp$" . web-mode)
-    ("\\.php$" . web-mode)
-    ("\\.css$" . web-mode)
-    :config
-    (setq web-mode-code-indent-offset 4)
-    (setq web-mode-css-indent-offset 2)
-    (setq web-mode-markup-indent-offset 2)
-    (add-hook 'web-mode-hook
-              (lambda ()
-                (make-local-variable 'web-mode-code-indent-offset)
-                (make-local-variable 'web-mode-markup-indent-offset)
-                (make-local-variable 'web-mode-css-indent-offset)
-                (emmet-mode))))
-#+END_SRC
-  
-** Word count functions
-  #+BEGIN_SRC emacs-lisp
-    (defun wc-non-interactive (start end)
-      "Count the number of words in the current region."
-      (save-excursion
-	(save-restriction
-	  (narrow-to-region start end)
-	  (goto-char (point-min))
-	  (count-matches "\\sw+"))))
-
-    ;;;###autoload
-    (defun wc-buffer ()
-      "Display the number of words in the current buffer."
-      (interactive)
-      (message (concat "The current buffer contains "
-		       (number-to-string
-			(wc-non-interactive (point-min) (point-max)))
-		       " words.")))
-
-    ;;;###autoload
-    (defun wc-region (start end)
-      "Display number of words in the region."
-      (interactive "r")
-      (message (concat "The current region contains "
-		       (number-to-string
-			(wc-non-interactive start end))
-		       " words.")))
-
-    ;;;###autoload
-    (defun wc-dwim ()
-      "Display a word count.
-    If there is a region defined, display the count for the region.
-    If not, display a word count for the whole buffer."
-      (interactive)
-      (if mark-active
-	  (wc-region (point) (mark))
-	(wc-buffer)))
-
-    (defalias 'wc 'wc-dwim)
-
-    (provide 'wc)
-#+END_SRC
-
+#+end_src
 ** Other stuff
 #+BEGIN_SRC emacs-lisp
-  (defun dmg/downcase-word ()
-    "Make the whole word lowercase"
-    (interactive)
-    (backward-to-word 1)
-    (downcase-word 1))
+  (use-package persistent-scratch)
+  (persistent-scratch-setup-default)
 
-  (bind-key "M-l" 'dmg/downcase-word)
+  (bind-key "M-l" 'dmg-downcase-word)
 
-  (defun dmg/capitalize-word ()
-    "Make this word capitalized, from its first letter"
-    (interactive)
-    (backward-to-word 1)
-    (capitalize-word 1))
-
-  (bind-key "M-c" 'dmg/capitalize-word)
+  (bind-key "M-c" 'dmg-capitalize-word)
 
   (unbind-key "M-.")
-  ;; (pdf-tools-install)
+  (pdf-tools-install)
 
   (use-package lilypond-mode
+    :defer t
     :mode ("\\.ly$" . LilyPond-mode)
     :load-path "/usr/share/emacs/site-lisp/"
-    :config
-    (add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock))))
+    :hook (LilyPond-mode . turn-on-font-lock))
 
   (use-package hl-line
+    :defer t
     :config
     (set-face-background 'hl-line "moccasin"))
 
   (require 'smartparens-config)
-  ;; (require 'smartparens-org)
-  ;; (smartparens-global-mode t)
+  (require 'smartparens-org)
+  (smartparens-global-mode t)
+  (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
+  (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
+  (define-key smartparens-mode-map (kbd "C-M-d") 'sp-down-sexp)
+  (define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
+  (define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
+  (define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
 
-  (bind-key "M-p" 'powerthesaurus-lookup-word-dwim)
+
+  (require 'titlecase)
+
+  (global-set-key (kbd "C-c C-o") 'find-file-at-point)
  #+END_SRC
 
 * Tools
 ** dired
  #+BEGIN_SRC emacs-lisp
-   (use-package dired)
-   (use-package dired-x
-     :init
-     (add-hook 'dired-mode-hook (lambda ()
-                                  (dired-omit-mode 1)
-                                  ;; (dired-hide-details-mode)
-                                  ;; (dired-icon-mode)
-                                  (all-the-icons-dired-mode))))
-   (load-library "dired-open")
-
-   (require 'dired-toggle-sudo)
-   (define-key dired-mode-map (kbd "C-c C-s") 'dired-toggle-sudo)
-   (eval-after-load 'tramp
-    '(progn
-       ;; Allow to use: /sudo:user@host:/path/to/file
-       (add-to-list 'tramp-default-proxies-alist
-                     '(".*" "\\`.+\\'" "/ssh:%h:"))))
+   (require 'dmg-dired)
  #+END_SRC
 
 ** etc
  #+BEGIN_SRC emacs-lisp
    (use-package dictionary
-     :bind ([mouse-3] . dictionary-mouse-popup-matching-words)
-     :config
-     (defun my-dictionary-search ()
-       (interactive)
-       (let ((word (current-word))
-             (enable-recursive-minibuffers t)
-             (val))
-         (setq val (read-from-minibuffer
-                    (concat "Word"
-                            (when word
-                              (concat " (" word ")"))
-                            ": ")))
-         (dictionary-new-search
-          (cons (cond
-                 ((and (equal val "") word)
-                  word)
-                 ((> (length val) 0)
-                  val)
-                 (t
-                  (error "No word to lookup")))
-                dictionary-default-dictionary)))))
+     :defer t
+     :bind ([mouse-3] . dictionary-mouse-popup-matching-words))
 
     (setq epa-file-encrypt-to '("kc5gmr@gmail.com"))
     (setq auto-save-file-name-transforms
@@ -1181,128 +434,41 @@ Change the M-x prompt
 
     ;; (load "~/.emacs.d/lisp/o2b.el") ; org2blog and other credentials
 
-   (defun dmg/search-sermons (text)
-     "Look in the sermons for the text"
-     (interactive "sEnter search text: ")
-     (grep-compute-defaults)
-     (rgrep text "*.tex" "/home/dan/Wp/Sermons/" nil))
+     
 
-    (defun ac (code)
-      "Lookup area code"
-      (interactive "sEnter area code: ")
-      (find-file "/usr/share/doc/miscfiles/na.phone.gz")
-      (occur code)
-      (kill-buffer "na.phone.gz"))
+   (use-package calendar
+     :hook (calendar-mode . set-buffer-to-small)
+     :config
+     (defun set-buffer-to-small ()
+       (face-remap-add-relative 'default '(:height 75))))
 
-    (defun dmg-temperature ()
-      (interactive)
-      (let* ((command "ansiweather ")
-             (options "-u imperial -l 'Holland, US' -a false -s false -w true -h true -p false -i false")
-             (cstring (concat command options))
-             (currtemp (string-trim (shell-command-to-string cstring)))
-             (fstring (replace-regexp-in-string " °F" "°" (replace-regexp-in-string "Weather in Holland: " "" currtemp)))
-             (now (format-time-string "%-k:%M, ")))
-        (insert (concat now fstring))))
+   (add-to-list 'load-path "/home/dan/.emacs.d/lisp/meme-master/")
 
+   (use-package meme
+     :commands (meme meme-file))
 
-    (use-package calendar)
-
-    (add-to-list 'load-path "/home/dan/.emacs.d/lisp/meme-master/")
-    (require 'meme)
-    (autoload 'meme "meme.el" "Create a meme from a collection" t)
-    (autoload 'meme-file "meme.el" "Create a meme from a file" t)
-
-    (use-package meme
-      :load-path "~/Software/Git/meme"
-      :commands (meme meme-file))
+   (which-key-mode -1)
  #+END_SRC
 
-
-GitHub token for paradox
-
-#+BEGIN_SRC emacs-lisp
- (setq paradox-github-token "a76dba7dc206119ad68c293d0bf2456c3926d62c")
-#+END_SRC
-
-Celestial Mode
+** custom mode line
 #+begin_src emacs-lisp
-  (use-package celestial-mode-line
-    :config
-    (setq global-mode-string '("" celestial-mode-line-string " " display-time-string))
-    (celestial-mode-line-start-timer))
+(require 'dmg-mode-line)
 #+end_src
 
-Some functions to help me review my journal entries; no longer used since moving to org-roam-dailies
-#+begin_src emacs-lisp :tangle no
-  (defun dmg-next-j-entry ()
-    "Move to the next date in journal.org"
-    (interactive)
-    (beginning-of-buffer)
-    (org-toggle-narrow-to-subtree)
-    (org-forward-heading-same-level 1)
-    (org-toggle-narrow-to-subtree))
-
-  (defun dmg-prev-j-entry ()
-    "Move to the previous date in journal.org"
-    (interactive)
-    (beginning-of-buffer)
-    (org-toggle-narrow-to-subtree)
-    (org-backward-heading-same-level 1)
-    (org-toggle-narrow-to-subtree))
-#+end_src
-
-** helpful
-#+begin_src emacs-lisp :tangle no
-  (global-set-key (kbd "C-h f") #'helpful-callable)
-
-  (global-set-key (kbd "C-h v") #'helpful-variable)
-  (global-set-key (kbd "C-h k") #'helpful-key)
-#+end_src
-
-** org-roam
+** show font
 #+begin_src emacs-lisp
-  (setq org-roam-v2-ack t)
-  
-  (use-package org-roam
-    :custom
-    (org-roam-directory "~/Dropbox/Org_Roam/")
-    :bind (("C-c n l" . org-roam-buffer-toggle)
-               ("C-c n s" . org-roam-node-find)
-               ("C-c n g" . org-roam-graph)
-               ("C-c n i" . org-roam-node-insert)
-               ("C-c n c" . org-roam-capture)
-               ("C-c n t" . org-roam-tag-add)
-               ("C-c n a" . org-roam-alias-add)
-               ;; Dailies
-               ("C-c n j" . org-roam-dailies-capture-today)
-               ("C-c n b" . org-roam-dailies-goto-previous-note)
-               ("C-c n f" . org-roam-dailies-goto-next-note)))
-  (setq org-roam-v2-ack t)
-  (org-roam-db-autosync-enable)
+  (require 'show-font)
 #+end_src
 
-** deft
+** pdf-tools
+Just trying this out. Maybe it can eventually replace Evince
 #+begin_src emacs-lisp
-  (use-package deft
-    :config
-    (setq deft-directory org-roam-directory
-          deft-recursive t
-          deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
-          deft-use-filename-as-title t)
-    :bind
-    ("C-c n d" . deft))
+  (pdf-loader-install)
 #+end_src
 
-** org-roam-ui
-#+begin_src emacs-lisp
-  ;; (add-to-list 'load-path "~/.emacs.d/private/org-roam-ui")
-  (load-library "org-roam-ui")
-#+end_src
-
-** elegant-agenda-mode
-#+begin_src emacs-lisp
-  (require 'elegant-agenda-mode)
-  (add-hook 'org-agenda-mode-hook 'elegant-agenda-mode)
+** casual
+#+begin_src emacs-lisp :tangle yes
+  (require 'dmg-casual)
 #+end_src
 
 * Final setup
@@ -1311,59 +477,34 @@ Some functions to help me review my journal entries; no longer used since moving
  #+BEGIN_SRC emacs-lisp
    (with-current-buffer "*scratch*"
      (org-superstar-mode 1)
+     
      (visual-line-mode))
  #+END_SRC
 
  Get my Google calendar set up in diary
   #+BEGIN_SRC emacs-lisp :tangle yes
-    (delete-file "~/Temp/basic.ics")
-    (delete-file "~/Dropbox/Brain/diary-google")
-    (shell-command "wget -P ~/Temp/ https://calendar.google.com/calendar/ical/kc5gmr%40gmail.com/private-7f6f8c0ad0b9cbf2414b471d1ea361aa/basic.ics" nil)
-    (kill-buffer "*Shell Command Output*")
-    (icalendar-import-file "~/Temp/basic.ics" "~/Dropbox/Brain/diary-google")
-    (kill-buffer "basic.ics")
+    (unless (file-exists-p "~/Dropbox/Management/cal.org")
+      (dmg-get-gcal))
+    (unless (file-updated-today-p "~/Dropbox/Management/cal.org")
+      (dmg-get-gcal))
   #+END_SRC
 
-  Set up the agenda files
-  #+BEGIN_SRC emacs-lisp
-    (setq org-agenda-files '("~/Dropbox/GTD"
-                             "~/Dropbox/Management/braindump.org"
-                             "~/Dropbox/Brain/theojournal.org"
-                             "~/Dropbox/Brain/clerk-notes.org"
-                             "~/Dropbox/Brain/books.org"))
-    (find-file "~/Dropbox/GTD/*org" t)
-    ;; (switch-to-buffer "clerk.org")
-
-
-    (defun dmg-evening ()
-      "Set org-agenda-files without clerk.org"
-      (interactive)
-      (setq org-agenda-files
-            '("~/Dropbox/GTD/personal.org"
-              "~/Dropbox/GTD/scholarship.org"
-              "~/Dropbox/Brain/books.org")))
-
-    ;; Vacation!
-
-    (dmg-evening)
-
-    (org-agenda-list)
-    (delete-other-windows)
-  #+END_SRC
-
-  Start server
-  #+BEGIN_SRC emacs-lisp :tangle yes
-    (server-start)
+ Start server and reset frame parameters
+  #+BEGIN_SRC emacs-lisp :tangle no
+    (unless (string-equal system-name "brahms")
+      (server-start)
+      (dmg-reset-frame-params))
   #+END_SRC
 
   Diminish some modes
   #+begin_src emacs-lisp :tangle yes
     (diminish 'org-pretty-tags-mode)
     (diminish 'visual-line-mode)
+    (diminish 'buffer-face-mode)
   #+end_src
 
   I don't know why this doesn't work right on Brahms. I have to put this down here for it to work.
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp :tangle no
     (if (string-equal system-name "brahms")
         (org-pretty-tags-global-mode))
   #+end_src
@@ -1373,8 +514,13 @@ Some functions to help me review my journal entries; no longer used since moving
     (setq auto-window-vscroll nil)
   #+end_src
 
-* Config
+  Encouragement!
+  #+begin_src emacs-lisp :tangle yes
+    (start-process "encouragement" nil "encouragement.sh")
+  #+end_src  
 
-Local Variables:
-eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle)) nil t)
-End:
+
+* Config
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda () (widen) (org-babel-tangle)) nil t)
+# End:

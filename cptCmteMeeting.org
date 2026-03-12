@@ -1,23 +1,32 @@
 * CURRENT %^{Committee Name} %^{Month} mtg completed%?
-DEADLINE: %^{deadline}t
+DEADLINE: %(dmg-org-new-deadline)
 :PROPERTIES:
 :CREATED: %U
 :END:
 *** NEXT [#B] Draft & send %\1 agenda                             :shlw:clsd:
-SCHEDULED: %^{agenda date}t
+SCHEDULED: %(dmg-org-insert-offset-time-stamp -9)
 :PROPERTIES:
 :Effort: 0:20
 :CREATED: %U
 :END:
 *** NEXT [#B] Prefill %\1 minutes                                 :shlw:clsd:
-SCHEDULED: %^{prefill minutes date}t
+SCHEDULED: %(dmg-org-insert-offset-time-stamp -1)
 :PROPERTIES:
 :Effort: 0:10
 :CREATED: %U
 :END:
 *** NEXT [#B] Draft & send %\1 minutes                            :shlw:clsd:
-SCHEDULED: %^{minutes date}t
+SCHEDULED: %(dmg-org-insert-offset-time-stamp 1)
 :PROPERTIES:
 :Effort: 0:15
 :CREATED: %U
 :END:
+*** NEXT [#B] Capture my tasks from %\1 meeting
+SCHEDULED:  %(dmg-org-insert-offset-time-stamp 1)
+:PROPERTIES:
+:Effort: 0:15
+:CREATED: %U
+:END:
+- put date of next meeting in calendar
+- check for needed referrals & queries
+- setup new project for next meeting

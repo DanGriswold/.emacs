@@ -1,5 +1,0 @@
-* NOW %^{Objective Name}%?
-DEADLINE: %^t
-:PROPERTIES:
-:CREATED: %U
-:END:
