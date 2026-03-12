@@ -1,0 +1,20 @@
+* CURRENT %^{Month} Session meeting completed%?
+DEADLINE: %(dmg-org-new-deadline)
+:PROPERTIES:
+:CREATED: %U
+:END:
+*** NEXT [#B] List items I want on Session agenda                    :shlw:clsd:
+SCHEDULED: %(dmg-org-insert-offset-time-stamp -14)
+:PROPERTIES:
+:Effort: 0:20
+:CREATED: %U
+:END:
+*** NEXT [#B] Capture my tasks from %\1 meeting
+SCHEDULED:  %(dmg-org-insert-offset-time-stamp 1)
+:PROPERTIES:
+:Effort: 0:15
+:CREATED: %U
+:END:
+- put date of next meeting in calendar
+- check for needed referrals & queries
+- setup new project for next meeting
