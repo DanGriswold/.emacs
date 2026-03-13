@@ -709,7 +709,7 @@
  '(initial-scratch-message "# Happy Hacking!\12\12\12")
  '(insert-directory-program "/bin/ls")
  '(ispell-check-comments nil)
- '(ispell-program-name "hunspell")
+ '(ispell-program-name "aspell")
  '(kept-new-versions 200)
  '(latex-run-command "latex -src-specials")
  '(line-spacing 0.2)
@@ -925,34 +925,34 @@
    '(("n" "NEXT actions")
      ("nw" "Work NEXT action" entry
       (file+headline "~/Dropbox/GTD/slpc.org" "Tasks")
-      (file "~/Dropbox/Emacs_git/cptTmpNext.org"))
+      (file "~/.emacs.d/lisp/cptTmpNext.org"))
      ("np" "Personal NEXT action" entry
       (file+headline "~/Dropbox/GTD/personal.org" "Tasks")
-      (file "~/Dropbox/Emacs_git/cptTmpNext.org"))
+      (file "~/.emacs.d/lisp/cptTmpNext.org"))
      ("ns" "Scholarship NEXT action" entry
       (file+headline "~/Dropbox/GTD/scholarship.org" "Tasks")
-      (file "~/Dropbox/Emacs_git/cptTmpNext.org"))
+      (file "~/.emacs.d/lisp/cptTmpNext.org"))
      ("p" "New Project")
      ("pw" "Work Project" entry
       (file+headline "~/Dropbox/GTD/slpc.org" "Unallied Projects")
-      (file "~/Dropbox/Emacs_git/cptTmpProj.org") :jump-to-captured t)
+      (file "~/.emacs.d/lisp/cptTmpProj.org") :jump-to-captured t)
      ("pp" "Personal Project" entry
       (file+headline "~/Dropbox/GTD/personal.org" "Unallied Projects")
-      (file "~/Dropbox/Emacs_git/cptTmpProj.org") :jump-to-captured t)
+      (file "~/.emacs.d/lisp/cptTmpProj.org") :jump-to-captured t)
      ("ps" "Scholarship Project" entry
       (file+headline "~/Dropbox/GTD/scholarship.org"
 		     "Unallied Projects")
-      (file "~/Dropbox/Emacs_git/cptTmpProj.org") :jump-to-captured t)
+      (file "~/.emacs.d/lisp/cptTmpProj.org") :jump-to-captured t)
      ("o" "New Objective")
      ("ow" "Work Objective" entry
       (file+headline "~/Dropbox/GTD/slpc.org" "Objectives")
-      (file "~/Dropbox/Emacs_git/cptTmpObj.org") :jump-to-captured t)
+      (file "~/.emacs.d/lisp/cptTmpObj.org") :jump-to-captured t)
      ("op" "Personal Objective" entry
       (file+headline "~/Dropbox/GTD/personal.org" "Objectives")
-      (file "~/Dropbox/Emacs_git/cptTmpObj.org") :jump-to-captured t)
+      (file "~/.emacs.d/lisp/cptTmpObj.org") :jump-to-captured t)
      ("os" "Scholarship Objective" entry
       (file+headline "~/Dropbox/GTD/scholarship.org" "Objectives")
-      (file "~/Dropbox/Emacs_git/cptTmpObj.org") :jump-to-captured t)
+      (file "~/.emacs.d/lisp/cptTmpObj.org") :jump-to-captured t)
      ("a" "Ask someone about something")
      ("aw" "Work Ask" entry
       (file+headline "~/Dropbox/GTD/slpc.org" "Tasks")
@@ -973,25 +973,24 @@
      ("S" "Setup")
      ("Ss" "Session meeting setup" entry
       (file+headline "~/Dropbox/GTD/slpc.org" "Meetings")
-      (file "~/Dropbox/Emacs_git/cptSessionMeeting.org")
-      :jump-to-captured t)
+      (file "~/.emacs.d/lisp/cptSessionMeeting.org") :jump-to-captured
+      t)
      ("Sm" "Meeting setup" entry
       (file+headline "~/Dropbox/GTD/slpc.org" "Meetings")
-      (file "~/Dropbox/Emacs_git/cptCmteMeeting.org")
-      :jump-to-captured t)
+      (file "~/.emacs.d/lisp/cptCmteMeeting.org") :jump-to-captured t)
      ("D" "brain Dump (\"What's on my mind now?\")" item
       (file+olp+datetree "~/Dropbox/Management/braindump.org") ""
       :jump-to-captured t)
      ("t" "Think about something")
      ("tw" "Work thought" entry
       (file+headline "~/Dropbox/GTD/slpc.org" "Tasks")
-      (file "~/Dropbox/Emacs_git/cptTmpThink.org"))
+      (file "~/.emacs.d/lisp/cptTmpThink.org"))
      ("tp" "Personal thought" entry
       (file+headline "~/Dropbox/GTD/personal.org" "Tasks")
-      (file "~/Dropbox/Emacs_git/cptTmpThink.org"))
+      (file "~/.emacs.d/lisp/cptTmpThink.org"))
      ("ts" "Scholarship thought" entry
       (file+headline "~/Dropbox/GTD/scholarship.org" "Tasks")
-      (file "~/Dropbox/Emacs_git/cptTmpThink.org"))
+      (file "~/.emacs.d/lisp/cptTmpThink.org"))
      ("r" "Research something")
      ("rp" "Research Personal" entry
       (file+headline "~/Dropbox/GTD/personal.org" "Tasks")
@@ -1052,9 +1051,8 @@
  '(org-ellipsis "⮷")
  '(org-enforce-todo-dependencies t)
  '(org-entities-user '(("space" "~" nil "&nbsp;" " " " " " ")))
- '(org-export-backends '(html latex odt pandoc))
+ '(org-export-backends '(ascii html icalendar latex md odt))
  '(org-export-date-timestamp-format "%B %e, %Y")
- '(org-export-invisible-backends '(ascii org))
  '(org-export-latex-date-format "%B %d, %Y")
  '(org-export-with-section-numbers nil)
  '(org-export-with-smart-quotes t)

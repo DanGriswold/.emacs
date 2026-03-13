@@ -2,7 +2,7 @@
 #+startup: oddeven
 
 * Header
-# Time-stamp: "2026-02-19 10:45 brahms"
+# Time-stamp: "2026-03-12 16:27 brahms"
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:4 h:4
 
@@ -104,7 +104,7 @@ And a view will have:
 * Startup and Core Packages
 Set location for my customization file
  #+BEGIN_SRC emacs-lisp
-   (setq custom-file "~/Dropbox/Emacs_git/emacs-custom.el")
+   (setq custom-file "~/.emacs.d/lisp/emacs-custom.el")
    (load custom-file)
  #+END_SRC
 

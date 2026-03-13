@@ -1,4 +1,4 @@
-(setq custom-file "~/Dropbox/Emacs_git/emacs-custom.el")
+(setq custom-file "~/.emacs.d/lisp/emacs-custom.el")
 (load custom-file)
 
 (defun dont-delay-compile-warnings (fun type &rest args)
