@@ -226,6 +226,7 @@ _e_ Evangelicalism
 (define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
 (define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
 (define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
+(define-key smartparens-mode-map (kbd "M-.") '  sp-backward-unwrap-sexp)
 
 
 (require 'titlecase)

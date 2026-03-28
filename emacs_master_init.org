@@ -2,7 +2,7 @@
 #+startup: oddeven
 
 * Header
-# Time-stamp: "2026-03-12 16:27 brahms"
+# Time-stamp: "2026-03-25 10:36 hindemith"
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:4 h:4
 
@@ -409,6 +409,7 @@ Load some of my stuff
   (define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
   (define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
   (define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
+  (define-key smartparens-mode-map (kbd "M-.") '  sp-backward-unwrap-sexp)
 
 
   (require 'titlecase)

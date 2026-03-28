@@ -64,6 +64,7 @@
      ("Other" "" TeX-run-command t t :help "Run an arbitrary command")
      ("Webify" "webify %s" TeX-run-command nil t :help
       "Upload this sermon's files to the web site")))
+ '(TeX-fold-auto t)
  '(TeX-fold-env-spec-list '(("[comment]" ("comment"))))
  '(TeX-fold-macro-spec-list
    '(("[f]" ("footnote")) ("[c]" ("cite")) ("[l]" ("label"))
@@ -79,6 +80,7 @@
      ("⭢" ("quad")) ("¿" ("textquestiondown"))
      ("¡" ("textexclamdown")) (1 ("title")) ("%" ("%"))
      ("⦃" ("noindent"))))
+ '(TeX-fold-quotes-on-insert t)
  '(TeX-master nil)
  '(TeX-newline-function 'newline-and-indent)
  '(TeX-output-view-style
@@ -642,7 +644,7 @@
       ("Dailies"
        (and (not (name . "*scratch*")) (directory . "daily")
 	    (mode . org-mode)))
-      ("LaTeX" (mode . latex-mode))
+      ("LaTeX" (or (mode . latex-mode) (mode . LaTeX-mode)))
       ("Org"
        (and (not (name . "*scratch*"))
 	    (or (mode . org-agenda-mode) (mode . org-mode))))
@@ -666,8 +668,8 @@
       (and (derived-mode . text-mode) (not (starred-name))))
      ("TeX"
       (or (derived-mode . tex-mode) (mode . latex-mode)
-	  (mode . context-mode) (mode . ams-tex-mode)
-	  (mode . bibtex-mode)))
+	  (mode . LaTeX-mode) (mode . context-mode)
+	  (mode . ams-tex-mode) (mode . bibtex-mode)))
      ("web"
       (or (derived-mode . sgml-mode) (derived-mode . css-mode)
 	  (mode . javascript-mode) (mode . js2-mode)
