@@ -109,6 +109,8 @@
 
 (use-package ox-odt :defer t)
 
+(require 'ox-pandoc)
+
 (require 'elegant-agenda-mode)
 (add-hook 'org-agenda-mode-hook 'elegant-agenda-mode)
 
