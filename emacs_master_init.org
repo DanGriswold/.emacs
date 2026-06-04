@@ -2,7 +2,7 @@
 #+startup: oddeven
 
 * Header
-# Time-stamp: "2026-03-25 10:36 hindemith"
+# Time-stamp: "2026-04-21 11:33 hindemith"
 #+PROPERTY: header-args :tangle yes
 #+OPTIONS: toc:4 h:4
 
@@ -387,7 +387,7 @@ Load some of my stuff
   (bind-key "M-c" 'dmg-capitalize-word)
 
   (unbind-key "M-.")
-  (pdf-tools-install)
+  (pdf-tools-install t nil t)
 
   (use-package lilypond-mode
     :defer t

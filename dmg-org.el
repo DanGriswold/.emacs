@@ -77,7 +77,7 @@
         ("Creativity")
         (:grouptags)
         ("open" . ?o)
-        ("closed" . ?c)
+        ("clsd" . ?c)
         (:endgrouptag)))
 
 
@@ -107,7 +107,7 @@
   ;; Override the key definition for org-exit
   (define-key org-agenda-mode-map "d" 'sacha/org-agenda-done))
 
-(use-package ox-odt :defer t)
+;; (use-package ox-odt :defer t)
 
 (require 'ox-pandoc)
 
@@ -146,7 +146,7 @@
 (define-key org-mode-map (kbd "C-c SPC") #'org-table-blank-field)
 
 ;; have bold/italic work over several lines
-(setcar (nthcdr 4 org-emphasis-regexp-components) 30)
+(setcar (nthcdr 4 org-emphasis-regexp-components) 10)
 (org-set-emph-re 'org-emphasis-regexp-components
 		 org-emphasis-regexp-components)
 
@@ -274,5 +274,9 @@
 (defun dmg-buffer-beginning ()
   (goto-char (point-min)))
 (add-hook 'org-agenda-finalize-hook #'dmg-buffer-beginning t)
+
+(defun dmg-open-agenda ()
+  (interactive)
+  (org-agenda nil "O"))
 
 (provide 'dmg-org)

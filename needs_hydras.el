@@ -153,6 +153,7 @@ _q_uit
 [_3_] Growth
 [_4_] Learning
 [_5_] Power
+[_6_] Focus
 [_q_] back
 "
   ("q" dmg-hydra-needs-main/body :exit t)
@@ -160,7 +161,8 @@ _q_uit
   ("2" (dmg-insert-need "Efficiency"))
   ("3" (dmg-insert-need "Growth"))
   ("4" (dmg-insert-need "Learning"))
-  ("5" (dmg-insert-need "Power")))
+  ("5" (dmg-insert-need "Power"))
+  ("6" (dmg-insert-need "Focus")))
 
 (defhydra dmg-hydra-needs-honesty (:color green :hint nil)
   "

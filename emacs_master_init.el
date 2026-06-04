@@ -204,7 +204,7 @@ _e_ Evangelicalism
 (bind-key "M-c" 'dmg-capitalize-word)
 
 (unbind-key "M-.")
-(pdf-tools-install)
+(pdf-tools-install t nil t)
 
 (use-package lilypond-mode
   :defer t

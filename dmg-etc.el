@@ -102,4 +102,9 @@ If not, display a word count for the whole buffer."
 (defalias 'wc 'wc-dwim)
 
 
+(use-package password-store-menu
+  :ensure t
+  :config (password-store-menu-enable)
+  :custom (password-store-menu-key "C-c p"))
+
 (provide 'dmg-etc)

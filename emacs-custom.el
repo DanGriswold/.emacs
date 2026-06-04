@@ -77,7 +77,7 @@
        "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt"
        "textbf" "textsc" "textup" "textsuperscript"))
      ("                        ❄❄❄❄❄❄❄❄❄❄❄❄❄❄❄❄❄❄❄❄" ("jump"))
-     ("⭢" ("quad")) ("¿" ("textquestiondown"))
+     ("⭢" ("quad")) ("⟹" ("qquad")) ("¿" ("textquestiondown"))
      ("¡" ("textexclamdown")) (1 ("title")) ("%" ("%"))
      ("⦃" ("noindent"))))
  '(TeX-fold-quotes-on-insert t)
@@ -279,9 +279,10 @@
  '(cua-overwrite-cursor-color "#dbb32d")
  '(cua-read-only-cursor-color "#75b938")
  '(current-language-environment "ASCII")
- '(custom-enabled-themes '(solarized-light))
+ '(custom-enabled-themes '(solo-jazz))
  '(custom-safe-themes
-   '("2b0fcc7cc9be4c09ec5c75405260a85e41691abb1ee28d29fcd5521e4fca575b"
+   '("0cc70543214e5133e0eb479a01e57128a4f3e62195ca9073dffe90c8a57519e1"
+     "2b0fcc7cc9be4c09ec5c75405260a85e41691abb1ee28d29fcd5521e4fca575b"
      "e36b78ef2b29a76c8487061af440de56e2b8481e6c9ef8cdc2a72cfd9d2475d2"
      "9113a2a0e6f13b8fe851c6c5a9b2a1a9608b9aae28b411c81211315b2e312007"
      "cffbae32e5e3859f671c4b1dc2a0d95a4a6f2d071f7d9b9adbe66aaf1a865008"
@@ -640,14 +641,15 @@
  '(ibuffer-never-show-predicates '("\\.org_archive$") nil (ibuf-ext))
  '(ibuffer-read-only-char 61475)
  '(ibuffer-saved-filter-groups
-   '(("default"
+   '(("Main"
       ("Dailies"
        (and (not (name . "*scratch*")) (directory . "daily")
 	    (mode . org-mode)))
-      ("LaTeX" (or (mode . latex-mode) (mode . LaTeX-mode)))
+      ("Org Agendas" (name . "Org Agenda"))
       ("Org"
        (and (not (name . "*scratch*"))
 	    (or (mode . org-agenda-mode) (mode . org-mode))))
+      ("LaTeX" (or (mode . latex-mode) (mode . LaTeX-mode)))
       ("PDF" (mode . pdf-view-mode))
       ("Lilypond" (mode . LilyPond-mode))
       ("Programming"
@@ -655,9 +657,9 @@
 	   (mode . php-html-helper-mode) (mode . css-mode)
 	   (mode . emacs-lisp-mode) (mode . lisp-interaction-mode)
 	   (mode . lua-mode)))
-      ("Dired" (mode . dired-mode)) ("Customize" (mode . Custom-mode))
+      ("Directories" (mode . dired-mode))
+      ("Customize" (mode . Custom-mode))
       ("Finding Stuff" (or (mode . grep-mode) (mode . locate-mode)))
-      ("Org Agendas" (name . "*Org Agenda"))
       ("Help"
        (or (name . "*Help*") (name . "*Apropos*") (name . "*info*"))))))
  '(ibuffer-saved-filters
@@ -828,8 +830,7 @@
 	      (org-agenda-skip-function
 	       '(org-agenda-skip-entry-if 'scheduled 'deadline)))))
       ((org-agenda-start-with-log-mode '(closed clock state))
-       (org-enforce-todo-dependencies nil)
-       (org-super-agenda-groups nil)))
+       (org-enforce-todo-dependencies nil)))
      ("rm" "Monthly Review"
       ((stuck ""
 	      ((org-agenda-overriding-header "Stuck Objectives")
@@ -848,8 +849,7 @@
 	      (org-agenda-sorting-strategy
 	       '(category-keep todo-state-up alpha-up)))))
       ((org-agenda-archives-mode nil)
-       (org-enforce-todo-dependencies nil)
-       (org-super-agenda-groups nil))
+       (org-enforce-todo-dependencies nil))
       nil)
      ("d" "Agenda with completed items" agenda ""
       ((org-agenda-overriding-header "Agenda with Completed items")
@@ -1053,7 +1053,6 @@
  '(org-ellipsis "⮷")
  '(org-enforce-todo-dependencies t)
  '(org-entities-user '(("space" "~" nil "&nbsp;" " " " " " ")))
- '(org-export-backends '(ascii html icalendar latex md odt))
  '(org-export-date-timestamp-format "%B %e, %Y")
  '(org-export-latex-date-format "%B %d, %Y")
  '(org-export-with-section-numbers nil)
@@ -1183,7 +1182,8 @@
      ("" "wrapfig" nil nil) ("" "rotating" nil nil)
      ("normalem" "ulem" t nil) ("" "amsmath" t nil)
      ("" "textcomp" t nil) ("" "amssymb" t nil) ("" "capt-of" nil nil)
-     ("" "titletoc" nil nil) ("" "hyperref" nil nil)))
+     ("" "titletoc" nil nil) ("" "hyperref" nil nil)
+     ("" "xcolor" nil nil)))
  '(org-latex-hyperref-template
    "\\hypersetup{\12 colorlinks=true,\12 urlcolor=blue,\12 urlbordercolor=blue,\12 pdfborder={1 1 1},\12 pdfborderstyle={/S/U/W 1},\12 pdfauthor={%a},\12 pdftitle={%t},\12 pdfkeywords={%k},\12 pdfsubject={%d},\12 pdfcreator={%c}, \12 pdflang={%L}}\12")
  '(org-latex-pdf-process
@@ -1191,7 +1191,7 @@
      "xelatex -interaction nonstopmode -output-directory %o %f"))
  '(org-link-abbrev-alist '(("gmail" . "https://mail.google.com/mail/u/0/#all/%s")))
  '(org-link-elisp-confirm-function 'y-or-n-p)
- '(org-link-elisp-skip-confirm-regexp "dmg-weather")
+ '(org-link-elisp-skip-confirm-regexp "dmg")
  '(org-link-email-description-format "%s (%c)")
  '(org-list-allow-alphabetical t)
  '(org-log-done nil)
@@ -1203,19 +1203,6 @@
  '(org-odd-levels-only t)
  '(org-odt-preferred-output-format "docx")
  '(org-outline-path-complete-in-steps nil)
- '(org-pandoc-menu-entry
-   '((52 "to html5 and open." org-pandoc-export-to-html5-and-open)
-     (36 "as html5." org-pandoc-export-as-html5)
-     (53 "to html5-pdf and open."
-	 org-pandoc-export-to-html5-pdf-and-open)
-     (37 "to html5-pdf." org-pandoc-export-to-html5-pdf)
-     (108 "to latex-pdf and open."
-	  org-pandoc-export-to-latex-pdf-and-open)
-     (76 "to latex-pdf." org-pandoc-export-to-latex-pdf)
-     (111 "to odt and open." org-pandoc-export-to-odt-and-open)
-     (79 "to odt." org-pandoc-export-to-odt)
-     (120 "to docx and open." org-pandoc-export-to-docx-and-open)
-     (88 "to docx." org-pandoc-export-to-docx)))
  '(org-password-manager-default-pwgen-command "pwgen --secure --symbols --capitalize --numerals 12 1")
  '(org-password-manager-scope '("~/Dropbox/Org_other/passwords.org.gpg"))
  '(org-pretty-tags-global-mode t)
@@ -1233,13 +1220,14 @@
  '(org-refile-use-outline-path 'file)
  '(org-return-follows-link t)
  '(org-roam-capture-templates
-   '(("d" "default" plain "%?" :unnarrowed t :target
+   '(("d" "default" plain "%?" :target
       (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-		 "#+title: ${title}\12#+date: %U\12"))
-     ("c" "Conversation" plain "%?" :jump-to-captured t :unnarrowed t
-      :target
+		 "#+title: ${title}\12#+date: %U\12")
+      :unnarrowed t)
+     ("c" "Conversation" plain "%?" :target
       (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-		 "#+title: ${title}\12# A conversation\12#+date: %U\12%?\12* Context\12\12* Main Points\12"))
+		 "#+title: ${title}\12# A conversation\12#+date: %U\12\12* Context\12\12* Main Points\12")
+      :jump-to-captured t :unnarrowed t)
      ("t" "theological thought" plain "%?" :target
       (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 		 "#+title: ${title}\12#+date: %U\12#+filetags: theology\12"))
@@ -1329,9 +1317,8 @@
 	       org-todo org-verbatim org-date org-drawer org-tag))
  '(outline-minor-mode-hook nil)
  '(outlined-elisp-startup-folded nil)
- '(package-archives
-   '(("gnu" . "https://elpa.gnu.org/packages/")
-     ("melpa" . "https://melpa.org/packages/")))
+ '(package-archive-column-width 6)
+ '(package-archives '(("melpa" . "https://melpa.org/packages/")))
  '(package-hidden-regexps
    '("\\`names" "\\`guess-language" "\\`excorporate" "\\`eglot"
      "\\`org-readme" "\\`show-marks" "^company-" "^consult-"
@@ -1345,19 +1332,19 @@
 		   dired-du dired-icon dired-open dired-toggle-sudo
 		   dirvish easy-find easy-theme-preview
 		   elegant-agenda-mode ghub gnuplot hydra info-colors
-		   intellij-theme interleave kaolin-themes kkp
-		   marginalia minions mixed-pitch modus-themes
+		   interleave kkp marginalia minions mixed-pitch
 		   nerd-icons-dired nord-theme olivetti orderless
 		   org-autolist org-fancy-priorities org-hide-drawers
 		   org-mime org-modern org-noter org-password-manager
 		   org-pdftools org-pretty-tags org-roam org-roam-ui
 		   org-super-agenda org-superstar org-variable-pitch
-		   ox-pandoc password-store pdf-meta-edit pdf-tools
+		   ox-pandoc password-generator password-store
+		   password-store-menu pdf-meta-edit pdf-tools
 		   persistent-scratch powerthesaurus rainbow-mode
-		   rebecca-theme scratch-plus seq show-font
-		   smartparens solarized-theme solo-jazz-theme
-		   sudo-edit sudo-utils titlecase use-package valign
-		   vertico web-mode writeroom-mode yaml-mode))
+		   rebecca-theme seq show-font smartparens
+		   solarized-theme solo-jazz-theme sudo-edit
+		   sudo-utils titlecase use-package valign vertico
+		   web-mode writeroom-mode yaml-mode))
  '(password-store-url-field "URL")
  '(pdf-misc-print-program "/usr/bin/evince" t)
  '(persistent-scratch-what-to-save '(major-mode))

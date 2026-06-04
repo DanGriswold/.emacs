@@ -38,8 +38,9 @@
 (add-hook 'ibuffer-mode-hook 
           (lambda ()
             (ibuffer-auto-mode 1)
-            (ibuffer-switch-to-saved-filter-groups "default")
+            (ibuffer-switch-to-saved-filter-groups "Main")
             (ibuffer-do-sort-by-alphabetic)))
+
 (use-package all-the-icons-ibuffer
   :ensure t
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
@@ -54,8 +55,10 @@
 (add-hook 'server-after-make-frame-hook 'dmg-reset-frame-params)
 
 (setq split-width-threshold 100)
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 115)
-(set-face-attribute 'variable-pitch nil :family "Source Sans Variable" :height 115)
+(if (eq system-name "brahms")
+    (set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 115)
+  (set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 145))
+(set-face-attribute 'variable-pitch nil :family "Source Sans Variable")
 
 (tooltip-mode -1)
 (modify-all-frames-parameters
